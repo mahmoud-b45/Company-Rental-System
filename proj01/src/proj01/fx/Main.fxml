@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj01.controllers.MainController">
+   <children>
+      <AnchorPane>
+         <children>
+            <Label style="-fx-background-color: #F77F3C;" text="RENTING SYSTEM" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <padding>
+                  <Insets bottom="10.0" left="55.0" right="55.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font name="Montserrat ExtraBold Italic" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="TOP_CENTER" minWidth="100.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: FFEE88;">
+               <children>
+                  <Button fx:id="homeBtn" contentDisplay="TOP" maxWidth="1.7976931348623157E308" onAction="#onHome" prefHeight="65.0" prefWidth="100.0" style="-fx-background-color: FFEE88;" text="HOME">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/customer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="addCustomerBtn" contentDisplay="TOP" maxWidth="1.7976931348623157E308" onAction="#addCustomer" prefHeight="65.0" prefWidth="100.0" style="-fx-background-color: FFEE88;" text="CUSTOMERS">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/customer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="addRentableBtn" contentDisplay="TOP" maxWidth="1.7976931348623157E308" onAction="#addRentable" prefHeight="65.0" prefWidth="100.0" style="-fx-background-color: FFEE88;" text="RENTABLES">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/carhouse.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="rentBtn" contentDisplay="TOP" maxWidth="1.7976931348623157E308" onAction="#rentReturn" prefHeight="65.0" prefWidth="100.0" style="-fx-background-color: FFEE88;" text="RENT/RETURN">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/handshake.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="saveBtn" contentDisplay="TOP" maxWidth="1.7976931348623157E308" onAction="#save" prefHeight="65.0" prefWidth="100.0" style="-fx-background-color: FFEE88;" text="SAVE">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/save.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="exitBtn" alignment="CENTER" contentDisplay="TOP" onAction="#exit" prefHeight="65.0" prefWidth="100.0" style="-fx-background-color: FFEE88;" text="EXIT">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/poweroff.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </VBox>
+            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
+               <content>
+                  <StackPane fx:id="contentStackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+               </content></ScrollPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

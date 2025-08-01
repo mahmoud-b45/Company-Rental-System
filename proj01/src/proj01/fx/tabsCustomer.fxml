@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+
+<TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj01.controllers.AddCustomerController">
+   <tabs>
+      <Tab fx:id="allCustomers" text="All Customers">
+        <content>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <TableView fx:id="customersTable" minWidth="1050.0">
+                     <columns>
+                        <TableColumn fx:id="customerTypeCol" prefWidth="75.0" text="Type" />
+                        <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="NoOfCarsCol" prefWidth="75.0" text="No of Cars" />
+                        <TableColumn fx:id="NoOfUnitsCol" prefWidth="75.0" text="No of Units" />
+                        <TableColumn fx:id="citizenNationalNoCol" prefWidth="75.0" text="National No" />
+                        <TableColumn fx:id="residentResidenceNoCol" prefWidth="75.0" text="Residince No" />
+                        <TableColumn fx:id="residentPassportNoCol" prefWidth="75.0" text="Passport No" />
+                        <TableColumn fx:id="residentNationalityCol" prefWidth="75.0" text="Nationality" />
+                        <TableColumn fx:id="customerBirthDateCol" prefWidth="75.0" text="Birthdate" />
+                        <TableColumn fx:id="citizenAgeCol" prefWidth="75.0" text="age" visible="false" />
+                        <TableColumn fx:id="companyLicenceNoCol" prefWidth="75.0" text="Licence No" />
+                        <TableColumn fx:id="companyLocationCol" prefWidth="75.0" text="Location" />
+                        <TableColumn fx:id="companyExpiryDateCol" prefWidth="75.0" text="Expiry Date" />
+                     </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+        </content>
+      </Tab>
+      <Tab fx:id="citizenTab" closable="false" text="Citizen">
+         <content>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <TableView fx:id="citizenTable">
+                     <columns>
+                        <TableColumn fx:id="citizenIDColumn" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="citizenNameColumn" prefWidth="75.0" text="name" />
+                        <TableColumn fx:id="citizenNationalNoColumn" prefWidth="75.0" text="national No" />
+                        <TableColumn fx:id="citizenBirthDateColumn" prefWidth="75.0" text="birthdate" />
+                        <TableColumn fx:id="citizenAgeColumn" prefWidth="75.0" text="age" />
+                     </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </content>
+      </Tab>
+      <Tab fx:id="residentTab" closable="false" text="Resident">
+         <content>
+            <ScrollPane>
+               <content>
+                  <TableView fx:id="residentTable">
+                     <columns>
+                        <TableColumn fx:id="residentIDColumn" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="residentNameColumn" prefWidth="75.0" text="name" />
+                        <TableColumn fx:id="residentResidenceNoColumn" prefWidth="75.0" text="Residince no" />
+                        <TableColumn fx:id="residentPassportNoColumn" prefWidth="75.0" text="passport No" />
+                        <TableColumn fx:id="residentNationalityColumn" prefWidth="75.0" text="nationality" />
+                        <TableColumn fx:id="residentBirthDateColumn" prefWidth="75.0" text="birthdate" />
+                        <TableColumn prefWidth="75.0" text="age" />
+                     </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </content>
+      </Tab>
+      <Tab fx:id="companyTab" closable="false" text="Company">
+         <content>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <TableView fx:id="companyTable" prefHeight="371.2" prefWidth="600.0">
+                     <columns>
+                        <TableColumn fx:id="companyIDColumn" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="companyNameColumn" prefWidth="75.0" text="name" />
+                        <TableColumn fx:id="companyLicenceNoColumn" prefWidth="75.0" text="licence No" />
+                        <TableColumn fx:id="companyLocationColumn" prefWidth="75.0" text="location" />
+                        <TableColumn fx:id="companyExpiryDateColumn" prefWidth="75.0" text="expirydate" />
+                     </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>
