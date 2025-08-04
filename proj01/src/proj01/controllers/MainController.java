@@ -1,12 +1,12 @@
 package proj01.controllers;
 
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import proj01.InfoSys;
@@ -14,7 +14,7 @@ import proj01.InfoSys;
 public class MainController {
 
 	@FXML
-	private Button homeBtn, addCustomer, addRentableBtn, exitBtn, rentBtn, saveBtn;
+	private Button homeBtn, addCustomer, addRentableBtn, exitBtn, rentBtn, saveBtn, loggerBtn;
 
 //	@FXML
 //	private AnchorPane contentAnchorPane;

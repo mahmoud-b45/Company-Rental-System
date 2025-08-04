@@ -5,14 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.application.Application;
@@ -26,43 +23,43 @@ import javafx.stage.Stage;
 import proj01.controllers.MainController;
 
 /**
- * 
+ *
  * @author Mahmoud
- * 
+ *
  *         - create customer using createCustomerMenu()
- * 
+ *
  *         - create rentable using createRentableMenu()
- * 
+ *
  *         - add customer to the list of customers and set of id's and customers
  *         using addObject() add rentable to list of rentables and set of id's
  *         and rentables using addObject()
- * 
+ *
  *         - select customer using selectCustomerMenu() which searches for
  *         customer using searchCustomer() and returns the specific type of
  *         customer using typeOfCustomer()
- * 
+ *
  *         - select rentable uses selectRentableMenu() which searches for
  *         rentable using searchRentable() and returns the specific type of
  *         rentable using typeOfRentable()
- * 
+ *
  *         - search for customer using searchCustomer()
- * 
+ *
  *         - search for rentable using searchRentable()
- * 
+ *
  *         - rent/return using makeOperationMenu() which uses
  *         selectCustomerMenu() and selectRentableMenu() to check if they are in
  *         system or null and rentOperation() and returnOperation()
- * 
+ *
  *         - rentOperation() checks null, checks availability, checks policy. if
  *         all good, it ads the rentable to customer and set rentable not
  *         available and ads rent operation to operations list
- * 
+ *
  *         - returnOperation() checks null, checks availability, searches for
  *         operation. if all good it removes the rentable from the customer and
  *         set available and ads return operation to operations list
- * 
+ *
  *         -
- * 
+ *
  */
 public class InfoSys extends Application {
 
@@ -112,7 +109,7 @@ public class InfoSys extends Application {
 		read();
 		initializeSets();
 //		 Application.launch(InfoSys.class, args);
-//		launch(args);
+		launch(args);
 		mainMenu();
 	}
 
@@ -193,7 +190,7 @@ public class InfoSys extends Application {
 
 	/**
 	 * used in main menu. an interface to use other methods like addObject().
-	 * 
+	 *
 	 * @return a Citizen or Resident or Company.
 	 * @throws CancelException
 	 */
@@ -237,10 +234,11 @@ public class InfoSys extends Application {
 				}
 			}
 		} catch (InputMismatchException | CancelException e) {
-			if (e instanceof CancelException)
+			if (e instanceof CancelException) {
 				System.out.println(e.getMessage());
-			else
+			} else {
 				System.out.println("you enterd a string in place of integers.\npress any key to go back...");
+			}
 			in.nextLine();
 			System.out.println("exiting...");
 			main(args2);
@@ -250,7 +248,7 @@ public class InfoSys extends Application {
 
 	/**
 	 * an interface to use other methods like addObject().
-	 * 
+	 *
 	 * @return a Car or RealEstate.
 	 * @throws CancelException
 	 */
@@ -436,7 +434,7 @@ public class InfoSys extends Application {
 	/**
 	 * determines the type of a customer. first it checks if null then uses
 	 * instanceof to determine the type and returns the correct type.
-	 * 
+	 *
 	 * @param customer
 	 * @param print    true= print output, false= don't print
 	 * @return
@@ -459,7 +457,7 @@ public class InfoSys extends Application {
 	/**
 	 * determines the type of a rentable. first it checks if null then uses
 	 * instanceof to determine the type and returns the correct type.
-	 * 
+	 *
 	 * @param rentable
 	 * @param print    true= print output, false= don't print
 	 * @return
@@ -495,16 +493,18 @@ public class InfoSys extends Application {
 
 	/**
 	 * returns a rentable if found. uses typeOfRentable()
-	 * 
+	 *
 	 * @param outId
 	 * @param print =true print the rentable
 	 * @return type Rentable
 	 */
 	public static Rentable searchRentableByID(String outId) {
 		Rentable rentable = null;
-		for (Rentable rentableIterator : rentables)
-			if (rentableIterator.getNumber().equals(outId))
+		for (Rentable rentableIterator : rentables) {
+			if (rentableIterator.getNumber().equals(outId)) {
 				rentable = rentableIterator;
+			}
+		}
 		System.out.println("searchRentableByID() :" + rentable);
 		return rentable;
 	}
@@ -514,22 +514,27 @@ public class InfoSys extends Application {
 		boolean found = false;
 
 		for (Customer customer : customers) {
-			if (!customer.getCustomerRentables().isEmpty())
+			if (!customer.getCustomerRentables().isEmpty()) {
 				if (rentableOut instanceof Car car) {
-					if (customer.getNoOfCars() > 0)
-						for (Rentable rentable : customer.getCustomerRentables())
+					if (customer.getNoOfCars() > 0) {
+						for (Rentable rentable : customer.getCustomerRentables()) {
 							if (rentable.getNumber().equals(rentableId)) {
 								found = true;
 								return customer;
 							}
+						}
+					}
 				} else {
-					if (customer.getNoOfUnits() > 0)
-						for (Rentable rentable : customer.getCustomerRentables())
+					if (customer.getNoOfUnits() > 0) {
+						for (Rentable rentable : customer.getCustomerRentables()) {
 							if (rentable.getNumber().equals(rentableId)) {
 								found = true;
 								return customer;
 							}
+						}
+					}
 				}
+			}
 		}
 
 		if (!found) {
@@ -551,29 +556,37 @@ public class InfoSys extends Application {
 		boolean isTypeProvided = false;
 		boolean sameType = false;
 
-		if (type.equals("rent") || type.equals("return"))
+		if (type.equals("rent") || type.equals("return")) {
 			isTypeProvided = true;
+		}
 
 		for (Operation operation : operations) {
 
-			if (op != null)
-				if (op == operation)
+			if (op != null) {
+				if (op == operation) {
 					return operation;
-			if (operation.getRentable()instanceof Car car)
+				}
+			}
+			if (operation.getRentable()instanceof Car car) {
 				sameRentable = car.equals(rentable);
-			else if (operation.getRentable()instanceof RealEstate realEstate)
+			} else if (operation.getRentable()instanceof RealEstate realEstate) {
 				sameRentable = realEstate.equals(rentable);
+			}
 
-			if (operation.getCustomer()instanceof Citizen citizen)
+			if (operation.getCustomer()instanceof Citizen citizen) {
 				sameCustomer = citizen.equals(customer);
-			if (operation.getCustomer()instanceof Resident resident)
+			}
+			if (operation.getCustomer()instanceof Resident resident) {
 				sameCustomer = resident.equals(customer);
-			if (operation.getCustomer()instanceof Company company)
+			}
+			if (operation.getCustomer()instanceof Company company) {
 				sameCustomer = company.equals(customer);
+			}
 
 			if (isTypeProvided) {
-				if (operation.getOperationType().equals(type))
+				if (operation.getOperationType().equals(type)) {
 					sameType = true;
+				}
 
 				if (sameCustomer && sameRentable && sameType) {
 					operationFound = operation;
@@ -597,9 +610,11 @@ public class InfoSys extends Application {
 //		System.out.println("\n*************************************************");
 //		System.out.println(" search operation by id...");
 //		System.out.println("*************************************************");
-		for (Operation operation : operations)
-			if (operation.getId() == outId)
+		for (Operation operation : operations) {
+			if (operation.getId() == outId) {
 				return operation;
+			}
+		}
 		return null;
 	}
 
@@ -607,7 +622,7 @@ public class InfoSys extends Application {
 	 * search for the most recent rent operation that has no return operation for
 	 * the customer and rentable. if operation found you can use it to create return
 	 * operation.
-	 * 
+	 *
 	 * @param customer
 	 * @param rentable
 	 * @return operation that you can use to create return operation
@@ -618,9 +633,10 @@ public class InfoSys extends Application {
 					&& op.getRentable().getNumber().equals(rentable.getNumber())) {
 				// 2 that has the same customer and rentable
 				if (op.getOperationType().equals("rent")) {// 3 and type rent
-					if (searchOperationById(op.getId() * -1) == null)
+					if (searchOperationById(op.getId() * -1) == null) {
 						// 4 and doesn't have return operation
 						return op;
+					}
 				} // 3
 			} // 2
 		} // 1
@@ -633,9 +649,10 @@ public class InfoSys extends Application {
 					&& op.getRentable().getNumber().equals(rentable.getNumber())) {
 				// 2 that has the same customer and rentable
 				if (op.getOperationType().equals("return")) {// 3 and type rent
-					if (searchOperationById(op.getId() * -1) == null)
+					if (searchOperationById(op.getId() * -1) == null) {
 						// 4 and doesn't have return operation
 						return op;
+					}
 				} // 3
 			} // 2
 		} // 1
@@ -647,7 +664,7 @@ public class InfoSys extends Application {
 	 * and rentable then make operation used in main menu and other controller
 	 * classes. it uses selecCustomerMenu(), selectRentableMenu(), selectRentable(),
 	 * returnOperation(), rentOperation()
-	 * 
+	 *
 	 * @param customerId
 	 * @param rentableId
 	 * @param selectOption =-1 ask user for options,=#option selects directly any
@@ -692,22 +709,25 @@ public class InfoSys extends Application {
 					break;
 
 				case 3:// rent
-					if (rentable != null)
+					if (rentable != null) {
 						if (!rentable.isStatus()) {// if not available
 							alertWindow("rentable not available");
 							System.out.println("rentable not available");
 							rentable = null;
 							break;
 						}
-					if (rentOperation(customer, rentable) != -1)
+					}
+					if (rentOperation(customer, rentable) != -1) {
 						result = true;
+					}
 					System.out.println("make rent operation(): " + result);
 					return result;
 
 				case 4:// return
 					Operation operation = searchOperationByCustomerAndRentable(customer, rentable, null, "return");
-					if (returnOperation(customer, rentable) != null)
+					if (returnOperation(customer, rentable) != null) {
 						result = true;
+					}
 					System.out.println("make return operation(): " + result);
 					return result;
 				case 0:
@@ -725,7 +745,7 @@ public class InfoSys extends Application {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param customerId
 	 * @param rentableId
 	 * @return returns the id number or -1 if rent operation failed.
@@ -736,7 +756,7 @@ public class InfoSys extends Application {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param customer
 	 * @param rentable
 	 * @return returns the id number or -1 if rent operation failed.
@@ -768,7 +788,7 @@ public class InfoSys extends Application {
 
 	/**
 	 * probably the one that is used
-	 * 
+	 *
 	 * @param operation
 	 * @param customer
 	 * @param rentable
@@ -783,7 +803,7 @@ public class InfoSys extends Application {
 	 * create return operation if there is a rent operation for the same customer
 	 * and rentable. return -1 if operation failed otherwise return negative
 	 * operation id.
-	 * 
+	 *
 	 * @param operation
 	 * @param customerOut
 	 * @param rentableOut
@@ -910,7 +930,7 @@ public class InfoSys extends Application {
 
 	/**
 	 * probably replace with remove object will remove this method
-	 * 
+	 *
 	 * @throws CancelException
 	 */
 	private static boolean deleteMenu() throws CancelException {
@@ -972,7 +992,7 @@ public class InfoSys extends Application {
 	 * checkCustomerId() and checkRentableId() why? to check if unique or not. if
 	 * unique why? it determines the type and adds the object to the appropriate
 	 * list.
-	 * 
+	 *
 	 * @param object
 	 * @return
 	 * @throws CancelException
@@ -1007,7 +1027,7 @@ public class InfoSys extends Application {
 
 	/**
 	 * takes care of the logic of returning operations and cleaning lists.
-	 * 
+	 *
 	 * @param rentable
 	 * @return
 	 * @throws CancelException
@@ -1026,7 +1046,7 @@ public class InfoSys extends Application {
 				Customer customer = searchCustomerByRentable(rentable);
 				if (customer != null) {
 					Operation operation = searchOperationByCustomerAndRentable(customer, rentable, null, "");
-					if (operation != null)
+					if (operation != null) {
 						if (returnOperation(customer.getId(), rentable.getNumber()) != null) {// if return successful
 							if (cleanRentablesListAndSet(rentable)) {// remove rentable
 								result = true;
@@ -1034,6 +1054,7 @@ public class InfoSys extends Application {
 								return result;
 							}
 						}
+					}
 				}
 			} // 3
 		} // 1
@@ -1042,7 +1063,7 @@ public class InfoSys extends Application {
 
 	/**
 	 * takes care of the logic of returning operations and cleaning lists.
-	 * 
+	 *
 	 * @param customer
 	 * @return
 	 * @throws CancelException
@@ -1052,12 +1073,14 @@ public class InfoSys extends Application {
 		// false=(not found/unique)
 		// true=(found/not unique)
 		if (checkCustomerId(customer.getId())) {
-			if (!customer.getCustomerRentables().isEmpty())
+			if (!customer.getCustomerRentables().isEmpty()) {
 				for (Rentable rentable : new ArrayList<>(customer.getCustomerRentables())) {
 					Operation operation = searchOperationByCustomerAndRentable(customer, rentable, null, "");
-					if (returnOperation(operation.getCustomer(), operation.getRentable()) == null)
+					if (returnOperation(operation.getCustomer(), operation.getRentable()) == null) {
 						return false;
+					}
 				}
+			}
 			result = cleanCustomersListAndSet(customer);
 			System.out.println("deleteCustomer() : " + result);
 			return result;
@@ -1068,7 +1091,7 @@ public class InfoSys extends Application {
 	/**
 	 * delete operation at the end. meaning that this customer and rentable has not
 	 * been used in other operations and this is the most recent operation.
-	 * 
+	 *
 	 * @param operationOut
 	 * @throws CancelException
 	 */
@@ -1104,7 +1127,7 @@ public class InfoSys extends Application {
 	/**
 	 * takes care of cleaning rentable from all lists and sets. it doesn't return or
 	 * do any logic to other objects like operations or customers.
-	 * 
+	 *
 	 * @param rentable
 	 * @return true or false
 	 */
@@ -1131,7 +1154,7 @@ public class InfoSys extends Application {
 	/**
 	 * takes care of cleaning rentable from all lists and sets. it doesn't return or
 	 * do any logic to other objects like operations or customers.
-	 * 
+	 *
 	 * @param customer
 	 * @return
 	 */
@@ -1216,10 +1239,12 @@ public class InfoSys extends Application {
 	 */
 	public static void initializeSets() {
 		// fill id set
-		for (Customer customer : customers)
+		for (Customer customer : customers) {
 			customersIds.add(customer.getId());
-		for (Rentable rentable : rentables)
+		}
+		for (Rentable rentable : rentables) {
 			rentablesIds.add(rentable.getNumber());
+		}
 
 		printRentablesIDsSet();
 
@@ -1242,7 +1267,7 @@ public class InfoSys extends Application {
 	/**
 	 * uses a set that hold customers ids to check for uniqueness. if it returns
 	 * true then the id is not unique and it already exist.
-	 * 
+	 *
 	 * @param id
 	 * @return true=(found/not unique), false=(not found/unique)
 	 */
@@ -1252,7 +1277,7 @@ public class InfoSys extends Application {
 
 	/**
 	 * uses a set that hold rentables ids to check for uniqueness.
-	 * 
+	 *
 	 * @param id
 	 * @return true=(found/not unique), false=(not found/unique)
 	 */
@@ -1264,7 +1289,7 @@ public class InfoSys extends Application {
 	 * used in createCustomerMenu() and createRentableMenu(). uses checkCustomerId()
 	 * and checkRentableId() to check if unique or not. if unique it determines the
 	 * type and adds the object to the appropriate list.
-	 * 
+	 *
 	 * @param object
 	 * @return true= object added successfully, false= couldn't add due to duplicate
 	 *         id/null
@@ -1278,8 +1303,9 @@ public class InfoSys extends Application {
 		if (object instanceof Customer customer) {
 			// add object=true=!(false=(not found/unique))
 			// don't add object=false=!(true=(found/not unique))
-			if (!checkCustomerId(customer.getId()))
+			if (!checkCustomerId(customer.getId())) {
 				uniqueId = customersSet.add(customer);
+			}
 			if (uniqueId) {
 				customersIds.add(customer.getId());
 				customers.add(customer);
@@ -1294,8 +1320,9 @@ public class InfoSys extends Application {
 			}
 			return uniqueId;
 		} else if (object instanceof Rentable rentable) {// OBJECT INSTANCE OF RENTABLE
-			if (!checkRentableId(rentable.getNumber()))
+			if (!checkRentableId(rentable.getNumber())) {
 				uniqueId = rentablesSet.add(rentable);
+			}
 			if (uniqueId) {
 				rentablesIds.add(rentable.getNumber());
 				rentables.add(rentable);
@@ -1319,7 +1346,7 @@ public class InfoSys extends Application {
 	/**
 	 * shows a message in a dialog window. used to alert user for important
 	 * operations results.
-	 * 
+	 *
 	 * @param message
 	 */
 	public static void alertWindow(String message) {
@@ -1369,21 +1396,23 @@ public class InfoSys extends Application {
 	public static void printCustomersSet() {
 		System.out.println("printCustomersSet(): ");
 		int i = 1;
-		for (Customer customer : customersSet)
+		for (Customer customer : customersSet) {
 			System.out.println("" + (i++) + " " + customer);
+		}
 	}
 
 	public static void printOngoingOperations() {
 		System.out.println("ongoingOperations(): ");
 		int i = 1;
-		for (Operation op : ongoingOperations)
+		for (Operation op : ongoingOperations) {
 			System.out.println("" + (i++) + " " + op);
+		}
 	}
 
 	public static void listOperationsByDate() throws CancelException {
 		ArrayList<Rentable> specificDateRentables = new ArrayList<>();
 		Date date = new Date(true);// user entry
-		if (date != null)
+		if (date != null) {
 			for (Operation operation : operations) {
 				Date dd = operation.getOperationDate();
 				if (dd.getDay() == date.getDay() && dd.getMonth() == date.getMonth()
@@ -1396,6 +1425,7 @@ public class InfoSys extends Application {
 							+ operation.getRentable().getNumber());
 				}
 			}
+		}
 	}
 
 	private static void reportMenu() throws CancelException {
@@ -1438,10 +1468,12 @@ public class InfoSys extends Application {
 					if (customer != null) {
 						System.out.println("Report 1 list all rentables by customer: \nname: " + customer.getName()
 								+ ", id: " + customer.getId());
-						for (Rentable customerRentable : customer.getCustomerRentables())
+						for (Rentable customerRentable : customer.getCustomerRentables()) {
 							System.out.println(customerRentable);
-					} else
+						}
+					} else {
 						System.out.println("couldn't report. customer not found/null");
+					}
 					break;
 				}
 				case 2: {
@@ -1503,38 +1535,41 @@ public class InfoSys extends Application {
 	} // END report()
 
 	/**
-	 * 
+	 *
 	 * @param available true=available, false=unavailable.
 	 * @return
 	 */
 	public static ArrayList<Rentable> listAvailUnavilRentables(boolean available) {
 		ArrayList<Rentable> availableRentables = new ArrayList<>();
 		ArrayList<Rentable> unavailableRentables = new ArrayList<>();
-		for (Rentable rentable : rentables)
+		for (Rentable rentable : rentables) {
 			if (rentable.isStatus()) {
 				availableRentables.add(rentable);
 			} else {
 				unavailableRentables.add(rentable);
 			}
+		}
 
 		if (available) {// 1 print available array
-			for (Rentable rentable : availableRentables)
+			for (Rentable rentable : availableRentables) {
 				if (rentable instanceof Car car) {
 					System.out.println(car);
 				} else {
 					RealEstate realestate = (RealEstate) rentable;
 					System.out.println(realestate);
 				}
+			}
 			return availableRentables;
 		} // 1
 		else if (!available) {// 2 print unavailable array
-			for (Rentable rentable : unavailableRentables)
+			for (Rentable rentable : unavailableRentables) {
 				if (rentable instanceof Car car) {
 					System.out.println(car);
 				} else {
 					RealEstate realestate = (RealEstate) rentable;
 					System.out.println(realestate);
 				}
+			}
 			return unavailableRentables;
 		} // 2
 		return null;
@@ -1543,15 +1578,17 @@ public class InfoSys extends Application {
 	public static void listAllRentables() {
 		int i = 1;
 		System.out.println("rentables: ");
-		for (Rentable rentable : rentables)
+		for (Rentable rentable : rentables) {
 			System.out.println("\t" + (i++) + " " + rentable);
+		}
 	}
 
 	public static void listAllOperations() {
 		int i = 1;
 		System.out.println("operations: ");
-		for (Operation operation : operations)
+		for (Operation operation : operations) {
 			System.out.println("\t" + (i++) + " " + operation);
+		}
 	}
 
 	public static ArrayList<Customer> listAllCustomers() {
@@ -1576,8 +1613,9 @@ public class InfoSys extends Application {
 		System.out.println("companies: ");
 		for (Customer companyIterator : customers) {
 			if (companyIterator instanceof Company company) {
-				if (company.isExpired())
+				if (company.isExpired()) {
 					System.out.print("expired");
+				}
 				System.out.print("\t" + (i++) + " " + company);
 			}
 		}
@@ -1586,34 +1624,42 @@ public class InfoSys extends Application {
 	public static void listAllCars() {
 		int i = 1;
 		System.out.println("cars: ");
-		for (Rentable carIterator : rentables)
-			if (carIterator instanceof Car car)
+		for (Rentable carIterator : rentables) {
+			if (carIterator instanceof Car car) {
 				System.out.println("\t" + (i++) + " " + car);
+			}
+		}
 	}
 
 	public static void listAllRealEstates() {
 		int i = 1;
 		System.out.println("realestates: ");
-		for (Rentable realestateIterator : rentables)
-			if (realestateIterator instanceof RealEstate realestate)
+		for (Rentable realestateIterator : rentables) {
+			if (realestateIterator instanceof RealEstate realestate) {
 				System.out.println("\t" + (i++) + " " + realestate);
+			}
+		}
 	}
 
 	public static void listAllResidents() {
 		int i = 1;
 		System.out.println("residents: ");
-		for (Customer residentIterator : customers)
-			if (residentIterator instanceof Resident resident)
+		for (Customer residentIterator : customers) {
+			if (residentIterator instanceof Resident resident) {
 				System.out.println("\t" + (i++) + " " + resident);
+			}
+		}
 
 	}
 
 	public static void listAllCitizens() {
 		int i = 1;
 		System.out.println("Citizens: ");
-		for (Customer citizienIterator : customers)
-			if (citizienIterator instanceof Citizen citizen)
+		for (Customer citizienIterator : customers) {
+			if (citizienIterator instanceof Citizen citizen) {
 				System.out.println("\t" + (i++) + " " + citizen);
+			}
+		}
 	}
 
 }

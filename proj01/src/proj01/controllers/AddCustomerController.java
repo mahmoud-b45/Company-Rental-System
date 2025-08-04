@@ -1,12 +1,17 @@
 package proj01.controllers;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
+import javax.naming.Binding;
+
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import proj01.Citizen;
 import proj01.Company;
@@ -52,7 +58,8 @@ public class AddCustomerController implements Initializable {
 	private DatePicker citizenBirthDateField, residentBirthDateField, birthDateField1, expiryDateField;
 
 	@FXML
-	private Button addResidentBtn, addCitizenBtn, addCompanyBtn, clearBtn, deleteBtn, goBackBtn;
+	private Button addResidentBtn, addCitizenBtn, addCompanyBtn, clearBtn, deleteBtn, addImageCitizenBtn,
+			addImageCompanyBtn, addImageResidentBtn;
 
 	@FXML
 	private Label birthDateLabel, birthDateLabel1, companyIdLabel, citizenIdLabel, residentIdLabe, expiryDateLabel,
@@ -106,25 +113,75 @@ public class AddCustomerController implements Initializable {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
+	
+	Stage newWindow = new Stage();
 
+	void openImageInNewWindow(ImageView imageView) {
+		ImageView imgV = new ImageView();// create new view because after closing
+		// the window/stage the view gets lost
+		imgV.setImage(imageView.getImage());
+		imgV.setPreserveRatio(true);
+		StackPane pane = new StackPane(imgV);
+		
+		if (imgV.getImage().getWidth() > imgV.getImage().getHeight()) {
+			imageView.fitWidthProperty().bind(pane.widthProperty());
+		} else {
+			imageView.fitHeightProperty().bind(pane.heightProperty());
+		}
+		Scene scene = new Scene(pane, 600, 500);
+		newWindow.setScene(scene);
+		newWindow.show();
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { // this method runs always when the scene loads
 		// initilize the error window for when it happen it will be ready to show up
 //		System.setErr(new PrintStream(new ErrorStreamListener(), true));
 //		System.err.println("controller add customer error.");
 
+//		=;
+//		javafx.beans.binding.BooleanExpression
+//		computeValue()
+//		javafx.beans.value.ObservableBooleanValue.get()
+		// Correct: Creating an instance of the implementing class
+//		BooleanProperty myProperty = new SimpleBooleanProperty(true);
+//		boolean booleanValue=true;
+//        Observable<Boolean> booleanObservable = Observable.just(booleanValue);
+//        BooleanProperty myBooleanProperty = new SimpleBooleanProperty(booleanValue);
+//        addImageCitizenBtn.disableProperty().bind(citizenTable.getSelectionModel().selectedItemProperty().isNull());
+		
+		// enable addImage btn after selecting a customer
+		addImageCitizenBtn.disableProperty().bind(Bindings.isEmpty(citizenTable.getSelectionModel().getSelectedItems()));// method 1
+		addImageResidentBtn.disableProperty().bind(residentTable.getSelectionModel().selectedItemProperty().isNull());// method 2
+		addImageCompanyBtn.disableProperty().bind(companyTable.getSelectionModel().selectedItemProperty().isNull());
+
+		// listen for double click and open image in new window
+		citizenImageView.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				openImageInNewWindow(citizenImageView);
+			}
+		});
+		companyImageView.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				openImageInNewWindow(companyImageView);
+			}
+		});
+		residentImageView.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				openImageInNewWindow(residentImageView);
+			}
+		});
+		
 		addCitizenBtn.disableProperty()
 				.bind(citizenIdField.textProperty().isEmpty().or(citizenNameField.textProperty().isEmpty())
 						.or(citizenNationalNoColumn.textProperty().isEmpty())
 						.or(citizenBirthDateField.valueProperty().isNull()) // Check if DatePicker is empty (null)
 				);
-
 		addResidentBtn.disableProperty()
 				.bind(residentIdField.textProperty().isEmpty().or(residentNameField.textProperty().isEmpty())
 						.or(nationalityField.textProperty().isEmpty()).or(passportNoField.textProperty().isEmpty())
 						.or(residenceNoField.textProperty().isEmpty())
 						.or(residentBirthDateField.valueProperty().isNull()));
-
 		addCompanyBtn.disableProperty()
 				.bind(companyIdField.textProperty().isEmpty().or(companyNameField.textProperty().isEmpty())
 						.or(licenceNoField.textProperty().isEmpty()).or(locationField.textProperty().isEmpty())
@@ -136,13 +193,15 @@ public class AddCustomerController implements Initializable {
 
 		ArrayList<Customer> arr = InfoSys.customers;
 		for (Customer customer : arr) {
-			if (customer instanceof Citizen)
+			if (customer instanceof Citizen) {
 				citizensList.add((Citizen) customer);
-			else if (customer instanceof Resident)
+			} else if (customer instanceof Resident) {
 				residentsList.add((Resident) customer);
-			else
+			} else {
 				companiesList.add((Company) customer);
+			}
 		}
+		
 		// change arraylist to observable list
 		citizensObservableList = FXCollections.observableArrayList(citizensList);
 		residentsObservableList = FXCollections.observableArrayList(residentsList);
@@ -221,19 +280,19 @@ public class AddCustomerController implements Initializable {
 	void onAddCitizen(ActionEvent event) {
 //		if (nationalNoField.getText().equals("") && citizenIdField.getText().equals("")
 //				&& citizenNameField.getText().equals("") && citizenBirthDateField.getValue().equals("")) {
-			int day = citizenBirthDateField.getValue().getDayOfMonth();
-			int month = citizenBirthDateField.getValue().getMonthValue();
-			int year = citizenBirthDateField.getValue().getYear();
-			Date date = new Date(day, month, year);
-			int id = Integer.parseInt(citizenIdField.getText());
-			String name = citizenNameField.getText();
-			int nationalNo = Integer.parseInt(nationalNoField.getText());
-			Citizen citizen = new Citizen(id, name, nationalNo, date);
-			if (InfoSys.addObject(citizen)) {
-				citizensObservableList.add(citizen);
-				onClear(null);
-				citizenImageView.setImage(citizen.getImage());
-			}
+		int day = citizenBirthDateField.getValue().getDayOfMonth();
+		int month = citizenBirthDateField.getValue().getMonthValue();
+		int year = citizenBirthDateField.getValue().getYear();
+		Date date = new Date(day, month, year);
+		int id = Integer.parseInt(citizenIdField.getText());
+		String name = citizenNameField.getText();
+		int nationalNo = Integer.parseInt(nationalNoField.getText());
+		Citizen citizen = new Citizen(id, name, nationalNo, date);
+		if (InfoSys.addObject(citizen)) {
+			citizensObservableList.add(citizen);
+			onClear(null);
+			citizenImageView.setImage(citizen.getImage());
+		}
 //		} else
 //			System.out.println("fill all fields");
 	}
@@ -243,21 +302,21 @@ public class AddCustomerController implements Initializable {
 //		if (passportNoField.getText().equals("") && nationalityField.getText().equals("")	&& residenceNoField.getText().equals("") && residentIdField.getText().equals("")
 //				&& residentNameField.getText().equals("") && residentBirthDateField.getValue().equals(""))
 //		{
-			int id = Integer.parseInt(residentIdField.getText());
-			String name = residentNameField.getText();
-			int residenceNo = Integer.parseInt(residenceNoField.getText());
-			String passportNo = passportNoField.getText();
-			String nationality = nationalityField.getText();
-			int day = residentBirthDateField.getValue().getDayOfMonth();
-			int month = residentBirthDateField.getValue().getMonthValue();
-			int year = residentBirthDateField.getValue().getYear();
-			Date date = new Date(day, month, year);
-			Resident resident = new Resident(id, name, residenceNo, passportNo, nationality, date);
-			if (InfoSys.addObject(resident)) {
-				residentsObservableList.add(resident);
-				onClear(null);
-				residentImageView.setImage(resident.getImage());
-			}
+		int id = Integer.parseInt(residentIdField.getText());
+		String name = residentNameField.getText();
+		int residenceNo = Integer.parseInt(residenceNoField.getText());
+		String passportNo = passportNoField.getText();
+		String nationality = nationalityField.getText();
+		int day = residentBirthDateField.getValue().getDayOfMonth();
+		int month = residentBirthDateField.getValue().getMonthValue();
+		int year = residentBirthDateField.getValue().getYear();
+		Date date = new Date(day, month, year);
+		Resident resident = new Resident(id, name, residenceNo, passportNo, nationality, date);
+		if (InfoSys.addObject(resident)) {
+			residentsObservableList.add(resident);
+			onClear(null);
+			residentImageView.setImage(resident.getImage());
+		}
 //		} else
 //			System.out.println("fill all fields");
 	}
@@ -267,29 +326,29 @@ public class AddCustomerController implements Initializable {
 //		if (locationField.getText().equals("") && licenceNoField.getText().equals("")
 //				&& companyIdField.getText().equals("") && companyNameField.getText().equals("")
 //				&& expiryDateField.getValue().equals("")) {
-			int id = Integer.parseInt(companyIdField.getText());
-			String name = companyNameField.getText();
-			String licenceNo = licenceNoField.getText();
-			String location = locationField.getText();
-			int day = expiryDateField.getValue().getDayOfMonth();
-			int month = expiryDateField.getValue().getMonthValue();
-			int year = expiryDateField.getValue().getYear();
-			Date date = new Date(day, month, year);
-			Company company = new Company(id, name, licenceNo, location, date);
-			if (InfoSys.addObject(company)) {
-				companiesObservableList.add(company);
-				onClear(null);
-				companyImageView.setImage(company.getImage());
-			}
+		int id = Integer.parseInt(companyIdField.getText());
+		String name = companyNameField.getText();
+		String licenceNo = licenceNoField.getText();
+		String location = locationField.getText();
+		int day = expiryDateField.getValue().getDayOfMonth();
+		int month = expiryDateField.getValue().getMonthValue();
+		int year = expiryDateField.getValue().getYear();
+		Date date = new Date(day, month, year);
+		Company company = new Company(id, name, licenceNo, location, date);
+		if (InfoSys.addObject(company)) {
+			companiesObservableList.add(company);
+			onClear(null);
+			companyImageView.setImage(company.getImage());
+		}
 //		} else
 //			System.out.println("fill all fields");
 	}
 
-	@FXML
-	void onGoBack(ActionEvent event) throws IOException {
-		MainController controller = master("/proj01/fx/designMain.fxml").getController();
-		controller.setStage(stage);
-	}
+//	@FXML
+//	void onGoBack(ActionEvent event) throws IOException {
+//		MainController controller = master("/proj01/fx/designMain.fxml").getController();
+//		controller.setStage(stage);
+//	}
 
 	private FXMLLoader master(String str) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(str));
@@ -341,17 +400,53 @@ public class AddCustomerController implements Initializable {
 			if (row >= 0) {
 				Resident removedResident = residentTable.getItems().remove(row);
 				residentTable.getSelectionModel().clearSelection();
-				if (InfoSys.deleteObject(removedResident))
+				if (InfoSys.deleteObject(removedResident)) {
 					residentsObservableList.remove(removedResident);
+				}
 			}
 		} else {
 			row = companyTable.getSelectionModel().getSelectedIndex();
 			if (row >= 0) {
 				Company removedCompany = companyTable.getItems().remove(row);
 				companyTable.getSelectionModel().clearSelection();
-				if (InfoSys.deleteObject(removedCompany))
+				if (InfoSys.deleteObject(removedCompany)) {
 					companiesObservableList.remove(removedCompany);
+				}
 			}
 		}
 	}
+
+	@FXML
+	void onAddImageCitizen() {
+		int row = citizenTable.getSelectionModel().getSelectedIndex();
+		if (row >= 0) {
+			Citizen citizen = citizenTable.getItems().get(row);
+			citizen.setImagePath();
+			citizenTable.getSelectionModel().clearSelection();//to update the image view immediately
+			citizenTable.getSelectionModel().select(row);
+		}
+	}
+
+	@FXML
+	void onAddImageResident() {
+		int row = residentTable.getSelectionModel().getSelectedIndex();
+		if (row >= 0) {
+			Resident resident = residentTable.getItems().get(row);
+			resident.setImagePath();
+			residentTable.getSelectionModel().clearSelection();
+			residentTable.getSelectionModel().select(row);
+		}
+	}
+
+	@FXML
+	void onAddImageCompany() {
+		int row = companyTable.getSelectionModel().getSelectedIndex();
+		if (row >= 0) {
+			Company company = companyTable.getItems().get(row);
+			company.setImagePath();
+			companyTable.getSelectionModel().clearSelection();
+			companyTable.getSelectionModel().select(row);
+		}
+	}
+
 }

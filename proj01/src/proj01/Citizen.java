@@ -17,7 +17,7 @@ public class Citizen extends Customer implements Serializable {
 
 	/**
 	 * copy constructor
-	 * 
+	 *
 	 * @param citizen
 	 */
 	public Citizen(Citizen citizen) {
@@ -55,8 +55,9 @@ public class Citizen extends Customer implements Serializable {
 		boolean sameName = Objects.equals(this.getName(), c.getName());
 		boolean sameBirthDate = Objects.equals(this.getStringBirthDate(), c.getStringBirthDate());
 
-		if (sameId && sameName && sameNationalNo && sameBirthDate)
+		if (sameId && sameName && sameNationalNo && sameBirthDate) {
 			System.out.println("citizen equals found by value not refrence");
+		}
 		return sameId && sameName && sameNationalNo && sameBirthDate;
 	}
 
@@ -105,7 +106,7 @@ public class Citizen extends Customer implements Serializable {
 	/**
 	 * returns date as string with no breaks as DayMonthYear e.x: 01011999 =
 	 * 01/01/1999
-	 * 
+	 *
 	 * @return
 	 */
 	public String getStringBirthDate() {
@@ -169,8 +170,9 @@ public class Citizen extends Customer implements Serializable {
 		for (Rentable r : getCustomerRentables()) {
 			sb.append("    ").append(r).append("\n");
 		}
-		if (!getCustomerRentables().isEmpty())
+		if (!getCustomerRentables().isEmpty()) {
 			sb.append("  ]\n");
+		}
 
 		sb.append("    noOfUnits=").append(getNoOfUnits()).append(",\n");
 		sb.append("    noOfCars=").append(getNoOfCars()).append("\n");

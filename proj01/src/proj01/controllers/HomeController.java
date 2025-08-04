@@ -19,23 +19,23 @@ public class HomeController {
 
 	@FXML
 	private LineChart<?, ?> lineChart;
-	
+
 	@FXML
 	private AreaChart<?, ?> areaChart;
-	
+
 	@FXML
 	private Label carsRevenueLabel, totalRevenueLabel, realEstateRevenueLabel, numberOfRentedRealEstatesLabel,
 			numberOfRentedCarsLabel;
-	
+
 	private PrintStream x = System.out;
 	private PrintStream y = System.err;
-	
+
 	private Stage stage;
-	
+
 	public void setStage(Stage stage){
 		this.stage=stage;
 	}
-	
+
 	@FXML
 	public void initilize() {
 		if (!InfoSys.operations.isEmpty()) {
@@ -129,7 +129,7 @@ public class HomeController {
 			numberOfRentedRealEstatesLabel.setText("0 out of 0");
 		}
 	}
-	
+
 	boolean isEmpty() {
 		return InfoSys.operations.isEmpty();
 	}
@@ -160,10 +160,11 @@ public class HomeController {
 			int unavailableCarsCount = unavailableCarsList.size();
 			int[] carsListInfo = { carsRevenue, unavailableCarsCount, carsList.size() };
 			return carsListInfo;
-		} else
+		} else {
 			return null;
+		}
 	}
-	
+
 	private int[] realEstateListInfo() {
 		if (!(InfoSys.rentables.isEmpty())) {
 			List<RealEstate> realEstatesList = InfoSys.rentables.stream()
@@ -176,8 +177,9 @@ public class HomeController {
 			int unavailableRealEstateCount = unavailableRealEstateList.size();
 			int[] realEstateListInfo = { realEstateRevenue, unavailableRealEstateCount, realEstatesList.size() };
 			return realEstateListInfo;
-		} else
+		} else {
 			return null;
+		}
 	}
-	
+
 }

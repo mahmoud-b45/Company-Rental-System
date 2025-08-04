@@ -25,9 +25,16 @@ public class Date implements Serializable {
 	 * @param flag =any value
 	 */
 	public Date(String flag) {
-		day = LocalDate.now().getDayOfMonth();
-		month = LocalDate.now().getMonthValue();
-		year = LocalDate.now().getYear();
+		if (flag.contains("/")) {
+			String str[]=flag.splitWithDelimiters("/", 0);
+			day=Integer.valueOf(str[0]);
+			month=Integer.valueOf(str[2]);
+			year=Integer.valueOf(str[4]);
+		} else {
+			day = LocalDate.now().getDayOfMonth();
+			month = LocalDate.now().getMonthValue();
+			year = LocalDate.now().getYear();
+		}
 	}
 
 	public Date(Date date) {
@@ -70,7 +77,7 @@ public class Date implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param manual true=enter date manually, false=enter automatically current
 	 *               date
 	 * @throws CancelException
@@ -117,14 +124,16 @@ public class Date implements Serializable {
 				in.next(); // <--- CRITICAL: Consume the invalid token ("e")
 				continue; // Go to the beginning of the while loop to re-prompt
 			}
-			if (tmp == 0)
+			if (tmp == 0) {
 				throw new CancelException(this.getClass() + " you entered 0 to exit");
+			}
 
 			if (tmp > 0 && tmp < 32) {
 				this.day = tmp;
 				break;
-			} else
+			} else {
 				System.out.println("invalid day it must be betwwen 1-31, enter again the day. enter 0 to exit.");
+			}
 		}
 
 	}
@@ -149,13 +158,15 @@ public class Date implements Serializable {
 				in.next(); // <--- CRITICAL: Consume the invalid token ("e")
 				continue; // Go to the beginning of the while loop to re-prompt
 			}
-			if (tmp == 0)
+			if (tmp == 0) {
 				throw new CancelException(this.getClass() + " you entered 0 to exit");
+			}
 			if (tmp > 0 && tmp < 13) {
 				this.month = tmp;
 				break;
-			} else
+			} else {
 				System.out.println("invalid month, it must be betwwen 1-12, enter again the month. enter 0 to exit.");
+			}
 		}
 	}
 
@@ -178,15 +189,17 @@ public class Date implements Serializable {
 				in.next(); // <--- CRITICAL: Consume the invalid token ("e")
 				continue; // Go to the beginning of the while loop to re-prompt
 			}
-			if (tmp == 0)
+			if (tmp == 0) {
 				throw new CancelException(this.getClass() + " you entered 0 to exit");
+			}
 
 			if (tmp > 1920) {
 				this.year = tmp;
 				break;
-			} else
+			} else {
 				System.out.println(
 						"invalid year it must be between 1920-(current year), enter again the year. \nenter 0 to exit.");
+			}
 		}
 
 	}

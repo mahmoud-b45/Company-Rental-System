@@ -1,7 +1,6 @@
 package proj01;
 
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Objects;
 
 public class RealEstate extends Rentable implements Serializable {
@@ -13,7 +12,7 @@ public class RealEstate extends Rentable implements Serializable {
 
 	/**
 	 * copy constructor
-	 * 
+	 *
 	 * @param realEstate
 	 */
 	public RealEstate(RealEstate realEstate) {
@@ -27,7 +26,7 @@ public class RealEstate extends Rentable implements Serializable {
 //    public Map<String, Object> createSnapshot() {
 //        // Start with the base class snapshot (name, price)
 //        Map<String, Object> snapshot = super.createSnapshot();
-//        
+//
 //        // Add Car-specific details
 //        snapshot.put("type", this.type);
 //        snapshot.put("location", this.location);
@@ -56,8 +55,9 @@ public class RealEstate extends Rentable implements Serializable {
 		boolean sameNumber = Objects.equals(this.getNumber(), r.getNumber());
 		boolean sameLocation = Objects.equals(this.location, r.getLocation());
 
-		if (sameNumber && sameType && sameLocation && sameMonthlyPrice)
+		if (sameNumber && sameType && sameLocation && sameMonthlyPrice) {
 			System.out.println("RealEstate equals found by value not refrence");
+		}
 		return sameNumber && sameType && sameLocation && sameMonthlyPrice;
 	}
 

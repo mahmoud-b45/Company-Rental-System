@@ -2,9 +2,6 @@ package proj01;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -23,7 +20,7 @@ public class Rentable implements Serializable {
 	JFileChooser fileChooser = new JFileChooser();
 
 	/**
-	 * this constructor is used for programmatic/direct object creation 
+	 * this constructor is used for programmatic/direct object creation
 	 * and assigning a number directly and used in subclasses constructors.
 	 * @param number
 	 */
@@ -32,7 +29,7 @@ public class Rentable implements Serializable {
 		this.status = true;
 		setImagePath();
 	}
-	
+
 	/**
 	 * this constructor used for manual entry of details by the user using console.
 	 */
@@ -44,7 +41,7 @@ public class Rentable implements Serializable {
 
 	/**
 	 * copy constructor
-	 * 
+	 *
 	 * @param rentable
 	 */
 	public Rentable(Rentable rentable) {
@@ -60,8 +57,9 @@ public class Rentable implements Serializable {
 			return true;
 		}
 //		if (rentable == null || !(rentable instanceof Rentable))
-		if (rentable == null || getClass() != rentable.getClass())
+		if (rentable == null || getClass() != rentable.getClass()) {
 			return false;
+		}
 
 		Rentable r = (Rentable) rentable;
 		boolean sameNumber = Objects.equals(this.getNumber(), r.getNumber());
@@ -139,21 +137,23 @@ public class Rentable implements Serializable {
 			this.number = null;
 			this.number = enterDetails(
 					getClass().getSimpleName() + " number \"id of rentable in system\": (" + this.number + ")");
-			if (InfoSys.checkRentableId(number))
+			if (InfoSys.checkRentableId(number)) {
 				System.out.println("\nduplicate id...\nenter a different id.\n");
+			}
 		} while (InfoSys.checkRentableId(number));
 		System.out.println("unique id...\n");
 
 	}
 
 	public int getMonthlyPrice(Rentable rentable) {
-		if (rentable instanceof Car car)
+		if (rentable instanceof Car car) {
 			return car.getMonthlyPrice();
-		else if (rentable instanceof RealEstate realEstate)
+		} else if (rentable instanceof RealEstate realEstate) {
 			return realEstate.getMonthlyPrice();
+		}
 		return 0;
 	}
-//	public abstract int getMonthlyPrice(); 
+//	public abstract int getMonthlyPrice();
 	// In Rentable.java
 //	public abstract Rentable copy();
 

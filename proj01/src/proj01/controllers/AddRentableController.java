@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import proj01.Car;
 import proj01.InfoSys;
@@ -32,7 +34,8 @@ import proj01.Rentable;
 public class AddRentableController implements Initializable {
 
 	@FXML
-	private Button addCarBtn, addRealEstateBtn, clearBtn, clearBtn1, deleteBtn, deleteBtn1, goBackBtn, goBackBtn1;
+	private Button addCarBtn, addRealEstateBtn, clearBtn, deleteBtn, /* goBackBtn, */ addImageCarBtn,
+			addImageRealEstateBtn;
 
 	@FXML
 	private Label carBrandLabel, carIDLabel, carModelLabel, carPlateNoLabel, monthlyPriceLabel, monthlyPriceLabel1,
@@ -80,11 +83,41 @@ public class AddRentableController implements Initializable {
 		this.stage = stage;
 	}
 
+	Stage newWindow = new Stage();
+
+	void openImageInNewWindow(ImageView imageView) {
+		ImageView imgV = new ImageView();// create new view because after closing
+		// the window/stage the view gets lost
+		imgV.setImage(imageView.getImage());
+		imgV.setPreserveRatio(true);
+		StackPane pane = new StackPane(imgV);
+		
+		if (imgV.getImage().getWidth() > imgV.getImage().getHeight()) {
+			imageView.fitWidthProperty().bind(pane.widthProperty());
+		} else {
+			imageView.fitHeightProperty().bind(pane.heightProperty());
+		}
+		Scene scene = new Scene(pane, 600, 500);
+		newWindow.setScene(scene);
+		newWindow.show();
+	}
+
 	/**
 	 * update sets or lists
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
+		// enable addImage btn after selecting a car/realestate
+		addImageCarBtn.disableProperty().bind(Bindings.isEmpty(carTable.getSelectionModel().getSelectedItems()));// method 1
+		addImageRealEstateBtn.disableProperty().bind(carTable.getSelectionModel().selectedItemProperty().isNull());// method 2
+		
+		// listen for double click and view image in a new window
+		carImageView.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				openImageInNewWindow(carImageView);
+			}
+		});
 
 		addCarBtn.disableProperty()
 				.bind(carIDField.textProperty().isEmpty().or(carPlateNoField.textProperty().isEmpty())
@@ -102,10 +135,11 @@ public class AddRentableController implements Initializable {
 		realEstateTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		for (Rentable rentable : arr) {
-			if (rentable instanceof Car)
+			if (rentable instanceof Car) {
 				carsList.add((Car) rentable);
-			else
+			} else {
 				realEstatesList.add((RealEstate) rentable);
+			}
 		}
 		carsObservableList = FXCollections.observableArrayList(carsList);
 		realEstatesObservableList = FXCollections.observableArrayList(realEstatesList);
@@ -164,18 +198,18 @@ public class AddRentableController implements Initializable {
 	void onAddCar(ActionEvent event) {
 //		if (carIDField.getText().equals("") && carBrandField.getText().equals("") && carModelField.getText().equals("")
 //				&& carPlateNoField.getText().equals("") && carMonthlyPriceField.getText().equals("")) {
-			String id = carIDField.getText();
-			String brand = carBrandField.getText();
-			int model = Integer.parseInt(carModelField.getText());
-			int plateNo = Integer.parseInt(carPlateNoField.getText());
-			int price = Integer.parseInt(carMonthlyPriceField.getText());
+		String id = carIDField.getText();
+		String brand = carBrandField.getText();
+		int model = Integer.parseInt(carModelField.getText());
+		int plateNo = Integer.parseInt(carPlateNoField.getText());
+		int price = Integer.parseInt(carMonthlyPriceField.getText());
 
-			Car car = new Car(id, plateNo, brand, model, price);
-			if (InfoSys.addObject(car)) {
-				carsObservableList.add(car);
-				onClear(null);
-				carImageView.setImage(car.getImage());
-			}
+		Car car = new Car(id, plateNo, brand, model, price);
+		if (InfoSys.addObject(car)) {
+			carsObservableList.add(car);
+			onClear(null);
+			carImageView.setImage(car.getImage());
+		}
 //		} else
 //			System.out.println("fill all fields");
 
@@ -185,17 +219,17 @@ public class AddRentableController implements Initializable {
 	void onAddRealEstate(ActionEvent event) {
 //		if (realEstateIDField.getText().equals("") && realEstateLocationField.getText().equals("")
 //				&& realEstateTypeField.getText().equals("") && realEstateMonthlyPriceField.getText().equals("")) {
-			String id = realEstateIDField.getText();
-			String location = realEstateLocationField.getText();
-			int price = Integer.parseInt(realEstateMonthlyPriceField.getText());
-			String type = realEstateTypeField.getText();
-			RealEstate realEstate = new RealEstate(id, type, location, price);
-			if (InfoSys.addObject(realEstate)) {
-				realEstatesObservableList.add(realEstate);
-				onClear(null);
-				realEstateImageView.setImage(realEstate.getImage());
+		String id = realEstateIDField.getText();
+		String location = realEstateLocationField.getText();
+		int price = Integer.parseInt(realEstateMonthlyPriceField.getText());
+		String type = realEstateTypeField.getText();
+		RealEstate realEstate = new RealEstate(id, type, location, price);
+		if (InfoSys.addObject(realEstate)) {
+			realEstatesObservableList.add(realEstate);
+			onClear(null);
+			realEstateImageView.setImage(realEstate.getImage());
 
-			}
+		}
 
 //		} else
 //			System.out.println("fill all fields");
@@ -250,20 +284,44 @@ public class AddRentableController implements Initializable {
 		}
 	}
 
-	@FXML
-	private void onGoBack(ActionEvent event) throws Exception {
-		MainController controller = master("/proj01/fx/designMain.fxml").getController();
-		controller.setStage(stage);
-	}
+//	@FXML
+//	private void onGoBack(ActionEvent event) throws Exception {
+//		MainController controller = master("/proj01/fx/designMain.fxml").getController();
+//		controller.setStage(stage);
+//	}
 
 	// helper method to load new stage
-	private FXMLLoader master(String str) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(str));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-		return loader;
+//	private FXMLLoader master(String str) throws IOException {
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource(str));
+//		Parent root = loader.load();
+//		Scene scene = new Scene(root);
+//		stage.setScene(scene);
+//		stage.show();
+//		return loader;
+//	}
+
+	@FXML
+	void onAddImageCar() {
+		int row = carTable.getSelectionModel().getSelectedIndex();
+		System.out.println(row);
+		if (row >= 0) {
+			Car car = carTable.getItems().get(row);
+			car.setImagePath();
+			carTable.getSelectionModel().clearSelection();
+			carTable.getSelectionModel().select(row);
+		}
+	}
+
+	@FXML
+	void onAddImageRealEstate() {
+		int row = realEstateTable.getSelectionModel().getSelectedIndex();
+		System.out.println(row);
+		if (row >= 0) {
+			RealEstate realEstate = realEstateTable.getItems().get(row);
+			realEstate.setImagePath();
+			realEstateTable.getSelectionModel().clearSelection();
+			realEstateTable.getSelectionModel().select(row);
+		}
 	}
 }
 

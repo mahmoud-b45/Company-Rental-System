@@ -4,17 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Operation implements Serializable {
-	private static final long serialVersionUID = 1L; // if i add it manually 
-	//i need to change it when ever i change something in the class to 
-	//prevent errors. if it's added automatically it will change when 
-	//ever something changes and you would need to do something to confirm 
+	private static final long serialVersionUID = 1L; // if i add it manually
+	//i need to change it when ever i change something in the class to
+	//prevent errors. if it's added automatically it will change when
+	//ever something changes and you would need to do something to confirm
 	//it's the same so you can be able to serialize and read/write the object.
 
 	private int operationId;
@@ -26,7 +24,7 @@ public class Operation implements Serializable {
 
 	OperationSnapshot operationSnapshot=new OperationSnapshot();
 	private int price;
-//	private int[][] arr=new int[6][1]; 
+//	private int[][] arr=new int[6][1];
 //	ArrayList<Object> arr1 = new ArrayList<>();
 //	ArrayList<ArrayList<Integer>> arr2 = new ArrayList<>();
 
@@ -39,22 +37,22 @@ public class Operation implements Serializable {
 	 * rent operation positive id, return operation same id of the rent but
 	 * negative. if a rent operation id is automatically generated, a return
 	 * operation you need to provide the same id used for the rent operation.
-	 * 
+	 *
 	 * @param id
 	 * @param customer
 	 * @param rentable
 	 * @param date
 	 * @param operationType
-	 * @throws CancelException 
+	 * @throws CancelException
 	 */
 	public Operation(int id, Customer customer, Rentable rentable, Date date, String operationType) throws CancelException {
 		this.customer = customer;
 		this.rentable = rentable;
 		this.operationType = operationType;
 		this.operationDate = date;
-		if (operationType.equals("rent"))
+		if (operationType.equals("rent")) {
 			this.operationId = random.nextInt(1000);
-		else {
+		} else {
 			this.operationId = id * -1;
 		}
 		// Polymorphism in action!
@@ -63,12 +61,12 @@ public class Operation implements Serializable {
 //		this.customerSnapshot = customer.createSnapshot();
 		setOperationSnapshot();
 	}
-	
+
 	/**
 	 * rent operation positive id, return operation same id of the rent but
 	 * negative. if a rent operation id is automatically generated, a return
 	 * operation you need to provide the same id used for the rent operation.
-	 * 
+	 *
 	 * @param id
 	 * @param customer
 	 * @param rentable
@@ -81,9 +79,9 @@ public class Operation implements Serializable {
 		setOperationDate();
 		setOperationType(type);
 
-		if (operationType.equals("rent"))
+		if (operationType.equals("rent")) {
 			this.operationId = random.nextInt(1000);
-		else {
+		} else {
 			this.operationId = id * -1;
 		}
 		setOperationSnapshot();
@@ -104,7 +102,7 @@ public class Operation implements Serializable {
 
 	/**
 	 * copy constructor this helps you copy from other objects
-	 * 
+	 *
 	 * @param operation
 	 */
 	public Operation(Operation operation) {
@@ -164,7 +162,7 @@ public class Operation implements Serializable {
 	public void setOperationSnapshot(OperationSnapshot operationSnapshot) {
 		this.operationSnapshot = operationSnapshot;
 	}
-	
+
 	public void setOperationSnapshot() throws CancelException {
 		operationSnapshot.setCustomer(customer);
 		operationSnapshot.setRentable(rentable);
@@ -182,24 +180,25 @@ public class Operation implements Serializable {
 //	}
 
 	private Map<String, Object> deepCopyMap(Map<String, Object> originalMap) {
-		if (originalMap == null)
+		if (originalMap == null) {
 			return null;
+		}
 		Map<String, Object> newMap = new HashMap<>();
 		for (Map.Entry<String, Object> entry : originalMap.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 
-			if (value instanceof Car car)
+			if (value instanceof Car car) {
 				newMap.put(key, new Car(car));
-			else if (value instanceof RealEstate realEstate)
+			} else if (value instanceof RealEstate realEstate) {
 				newMap.put(key, new RealEstate(realEstate));
-			else if (value instanceof Citizen citizen)
+			} else if (value instanceof Citizen citizen) {
 				newMap.put(key, new Citizen(citizen));
-			else if (value instanceof Resident resident)
+			} else if (value instanceof Resident resident) {
 				newMap.put(key, new Resident(resident));
-			else if (value instanceof Company company)
+			} else if (value instanceof Company company) {
 				newMap.put(key, new Company(company));
-			else if (value instanceof ArrayList) {
+			} else if (value instanceof ArrayList) {
 				// Be careful: This is a shallow copy of the ArrayList, but if the elements
 				// inside the ArrayList are mutable, you'd need to iterate and deep copy them
 				// too.
@@ -220,14 +219,16 @@ public class Operation implements Serializable {
 	}
 
 	private ArrayList<Rentable> deepcopyArray(ArrayList<Rentable> originalArray) {
-		if (originalArray == null)
+		if (originalArray == null) {
 			return null;
+		}
 		ArrayList<Rentable> newArray = new ArrayList<>();
 		for (Rentable rentable : originalArray) {
-			if (rentable instanceof Car car)
+			if (rentable instanceof Car car) {
 				newArray.add(new Car(car));
-			else if (rentable instanceof RealEstate realEstate)
+			} else if (rentable instanceof RealEstate realEstate) {
 				newArray.add(new RealEstate(realEstate));
+			}
 		}
 		return newArray;
 	}
@@ -245,8 +246,9 @@ public class Operation implements Serializable {
 		boolean sameCustomer = Objects.equals(this.customer, o.getCustomer());
 		boolean sameRentable = Objects.equals(this.rentable, o.getRentable());
 		boolean sameId = this.operationId == o.getId();
-		if (sameCustomer && sameRentable && sameId)
+		if (sameCustomer && sameRentable && sameId) {
 			System.out.println("Operation equals found by value not refrence");
+		}
 		return sameCustomer && sameRentable && sameId;
 	}
 
@@ -277,9 +279,9 @@ public class Operation implements Serializable {
 
 //
 	/**
-	 * only used to update operation details in case of errors. 
+	 * only used to update operation details in case of errors.
 	 * otherwise operation class is immutable.
-	 * 
+	 *
 	 * @param price
 	 */
 	public void setPrice(int price) {
@@ -391,13 +393,13 @@ public class Operation implements Serializable {
 //		System.out.println(str);
 //		for(Entry<String, Object> item:rentableSnapshot.entrySet())
 //			System.out.println(item);
-//		
+//
 //				System.out.println(", customerSnapshot=");
 //				for(Entry<String, Object> item:customerSnapshot.entrySet())
-//					System.out.println(item); 
-//	
+//					System.out.println(item);
+//
 //		return "";
-//	
+//
 //	}
 
 }

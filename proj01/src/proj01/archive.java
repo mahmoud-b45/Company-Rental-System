@@ -7,13 +7,316 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import proj01.controllers.MainController;
+
 public class archive {
+
 	
+	//removedOperation operationsTable.getSelectionModel().getSelectedItem();
+	//operationsObservableList.remove(operation);
+	//InfoSys.returnRentable(removedOperation.getCustomer(),removedOperation.getRentable(),removedOperation);
+
+	//int row = operationsTable.getSelectionModel().getSelectedIndex();
+	//if (row >= 0) {
+//		Operation removedOperation = operationsTable.getItems().get(row);
+//		Rentable rentable = removedOperation.getRentable();
+//		Customer customer = removedOperation.getCustomer();
+//		if (InfoSys.removeObject(removedOperation)) {
+//			removedOperation = operationsTable.getItems().remove(row);
+//			operationsTable.getSelectionModel().clearSelection();
+//			operationsObservableList.remove(removedOperation);
+//		}
+	//}
+	//operationsTable.refresh();
+	//customersTable.refresh();
+	//rentablesTable.refresh();
 	
+	@FXML
+	void onGoBack(ActionEvent event) throws Exception {
+
+		MainController controller = master("/proj01/fx/designMain.fxml").getController();
+		controller.setStage(stage);
+	}
+	
+//	String str = rentablesTable.getSelectionModel().getSelectedItem().getImage();
+//	Image image= new Image(str);
+//	imageView.setImage(image);
+//	imageView.fitHeightProperty().bind(imageView.getParent().heightProperty());
+//	imageView.fitHeightProperty();
+
+//	rentablesTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//		// 'newValue' is the Rentable object that was just selected
+//		if (newValue != null) {
+//			Image image = newValue.getImage(); // Get the Image from the selected Rentable
+//			if (image != null) {
+//				if (image.getWidth() > image.getHeight()) {
+//					System.out.println("111111");
+//					imageView.fitWidthProperty().bind(imageStackPane.widthProperty());
+//				} else {
+//					System.out.println("222222");
+//					imageView.fitHeightProperty().bind(imageStackPane.heightProperty());
+//				}
+//
+//				imageView.setImage(image);
+//			} else {
+//				imageView.setImage(null); // Clear image if loading failed
+//			}
+//		} else {
+//			// No item is selected (e.g., if selection is cleared)
+//			imageView.setImage(null);
+//		}
+//	});
+	
+//	// search
+//	FilteredList<Rentable> rentableFilteredData = new FilteredList<>(rentablesObservableList, p -> true);
+//	rentableIdField.textProperty().addListener((observable, oldValue, newValue) -> {
+//		rentableFilteredData.setPredicate(rentable -> {
+//			// If filter text is empty, display all persons.
+//			if (newValue == null || newValue.isEmpty()) {
+//				return true;
+//			}
+//
+//			// Compare car details with filter text.
+//			String lowerCaseFilter = newValue.toLowerCase();
+//			if (rentable instanceof Car car) {
+//				if (rentable.getNumber().toLowerCase().contains(lowerCaseFilter)) {
+//					return true;
+//				} else if (String.valueOf(car.getPlateNo()).contains(lowerCaseFilter)) {
+//					return true;
+//				} else if (car.getBrand().contains(lowerCaseFilter)) {
+//					return true;
+//				} else if (String.valueOf(car.getMonthlyPrice()).contains(lowerCaseFilter)) {
+//					return true;
+//				} else if (String.valueOf(car.isStatus()).contains(lowerCaseFilter)) {
+//					return true;
+//					// compare realEstate details
+//				}
+//			} else if (rentable instanceof RealEstate realEstate) {
+//				if (realEstate.getType().contains(lowerCaseFilter)) {
+//					return true;
+//				} else if (String.valueOf(realEstate.getMonthlyPrice()).contains(lowerCaseFilter)) {
+//					return true;
+//				} else if (String.valueOf(realEstate.isStatus()).contains(lowerCaseFilter)) {
+//					return true;
+//				}
+//			}
+//			return false; // Does not match.
+//		});
+//	});
+
+//	FilteredList<Customer> customersFilteredData = new FilteredList<>(customersObservableList, p -> true);
+//
+//	// 6. Add a listener to the text property of the search field
+//	customerIdField.textProperty().addListener((observable, oldValue, newValue) -> {
+//		customersFilteredData.setPredicate(customer -> {
+//			// If filter text is empty, display all persons.
+//			if (newValue == null || newValue.isEmpty()) {
+//				return true;
+//			}
+//
+//			// Compare person's details with filter text.
+//			String lowerCaseFilter = newValue.toLowerCase();
+//
+//			if (customer.getName().toLowerCase().contains(lowerCaseFilter)) {
+//				return true; // Filter matches name.
+//			} else if (String.valueOf(customer.getNoOfCars()).contains(lowerCaseFilter)) {
+//				return true; // Filter matches email.
+//			} else if (String.valueOf(customer.getId()).contains(lowerCaseFilter)) {
+//				return true; // Filter matches id.
+//			}
+//			return false; // Does not match.
+//		});
+//	});
+//	rentablesObservableList.addListener((ListChangeListener.Change<? extends Rentable> change)-> {
+//		noOfCars.setText(String.valueOf(rentablesObservableList.stream().filter(Car.class::isInstance).count()));
+//
+//	});
+	
+//	void openImageInNewWindow(ImageView originalImageView) {
+//    ImageView imgV = new ImageView(originalImageView.getImage());
+//
+//    if (imgV.getImage() != null) {
+//        imgV.setPreserveRatio(true);
+//
+//        // 1. Create a Group to hold the ImageView.
+//        // The Group's layout bounds will automatically resize when the
+//        // scale of its content changes, which the ScrollPane needs.
+//        Group innerGroup = new Group(imgV);
+//
+//        // 2. Create a ScrollPane and place the Group inside.
+//        ScrollPane scrollPane = new ScrollPane(innerGroup);
+//        
+//        // This is no longer necessary as the Group will handle the size.
+//        // scrollPane.setFitToWidth(true);
+//        // scrollPane.setFitToHeight(true);
+//
+//        // 3. Set the initial scale for the ImageView.
+//        // You might want to remove this if you want the image to open at 100% size.
+//        if (imgV.getImage().getWidth() > imgV.getImage().getHeight()) {
+//            imgV.fitWidthProperty().bind(scrollPane.widthProperty());
+//        } else {
+//            imgV.fitHeightProperty().bind(scrollPane.heightProperty());
+//        }
+//
+//        // 4. Add the zoom functionality to the ScrollPane.
+//        // We will change the scale of the Group, not the ImageView directly.
+//        scrollPane.addEventFilter(ScrollEvent.ANY, event -> {
+//            double zoomFactor = 1.05;
+//            if (event.getDeltaY() < 0) {
+//                zoomFactor = 1 / zoomFactor;
+//            }
+//
+//            // Get the current scale
+//            double newScale = innerGroup.getScaleX() * zoomFactor;
+//
+//            // Apply the new scale, but clamp it to a reasonable range
+//            if (newScale >= 0.1 && newScale <= 10.0) { // Example range
+//                // Get the coordinates of the mouse within the ScrollPane
+//                Point2D mousePosition = new Point2D(event.getX(), event.getY());
+//                
+//                // Adjust the pivot point for the zoom to be at the mouse cursor
+//                scrollPane.setHvalue(calculateScrollValue(scrollPane.getHvalue(), scrollPane.getWidth(), mousePosition.getX(), zoomFactor));
+//                scrollPane.setVvalue(calculateScrollValue(scrollPane.getVvalue(), scrollPane.getHeight(), mousePosition.getY(), zoomFactor));
+//
+//                innerGroup.setScaleX(newScale);
+//                innerGroup.setScaleY(newScale);
+//            }
+//            
+//            event.consume();
+//        });
+//        
+//        // Optional: add a ZoomEvent handler for touch devices
+//        scrollPane.addEventFilter(ZoomEvent.ANY, event -> {
+//            double zoomFactor = event.getZoomFactor();
+//            double newScale = innerGroup.getScaleX() * zoomFactor;
+//
+//            if (newScale >= 0.1 && newScale <= 10.0) {
+//                innerGroup.setScaleX(newScale);
+//                innerGroup.setScaleY(newScale);
+//            }
+//            event.consume();
+//        });
+//
+//        Scene scene = new Scene(scrollPane, 600, 500);
+//        Stage newWindow = new Stage();
+//        newWindow.setScene(scene);
+//        newWindow.show();
+//    }
+//}
+//
+//// Helper method to calculate the new scroll position to keep the content centered
+//private double calculateScrollValue(double currentScrollValue, double scrollPaneSize, double mousePosition, double zoomFactor) {
+//    double newScrollValue = currentScrollValue + (mousePosition / scrollPaneSize - currentScrollValue) * (1 - zoomFactor);
+//    return Math.max(0.0, Math.min(1.0, newScrollValue));
+//}
+
+//void openImageInNewWindow(ImageView originalImageView) {
+//
+//    ImageView imgV = new ImageView(originalImageView.getImage());
+//    if (imgV.getImage() != null) {
+//        
+//        imgV.setPreserveRatio(true);
+//
+//        // Use a StackPane as the content of the ScrollPane.
+//        // This is a good practice to ensure centering and correct sizing.
+//        StackPane container = new StackPane(imgV);
+//        
+//        // Use a ScrollPane and set the StackPane as its content
+//        ScrollPane scrollPane = new ScrollPane();
+//        scrollPane.setContent(container);
+//
+//        // Tell the ScrollPane to resize its content to fit its bounds.
+//        // This handles the initial sizing of the image.
+//        scrollPane.setFitToWidth(true);
+//        scrollPane.setFitToHeight(true);
+//
+//        // Bind the ImageView's fit properties to the container's size.
+//        // This ensures the image initially fills the view.
+//        if (imgV.getImage().getWidth() > imgV.getImage().getHeight()) {
+//            imgV.fitWidthProperty().bind(scrollPane.widthProperty());
+//        } else {
+//            imgV.fitHeightProperty().bind(scrollPane.heightProperty());
+//        }
+//
+//        // Add the zoom functionality
+//        scrollPane.setOnScroll(event -> {
+//            double zoomFactor = 1.05;
+//            if (event.getDeltaY() < 0) {
+//                zoomFactor = 1 / zoomFactor;
+//            }
+//            
+//            // Apply the zoom to the ImageView's scale
+//            imgV.setScaleX(imgV.getScaleX() * zoomFactor);
+//            imgV.setScaleY(imgV.getScaleY() * zoomFactor);
+//            
+//            event.consume();
+//        });
+//        
+//        // Show the window with the ScrollPane as the root
+//        Scene scene = new Scene(scrollPane, 600, 500);
+//        newWindow.setScene(scene);
+//        newWindow.show();
+//    }
+//}
+
+//void openImageInNewWindow(ImageView originalImageView) {
+//	
+//	ImageView imgV = new ImageView(originalImageView.getImage());
+//	
+//	if (imgV.getImage() != null) {
+//		imgV.setPreserveRatio(true);
+//		StackPane anchor = new StackPane(imgV);
+//		if (imgV.getImage().getWidth() > imgV.getImage().getHeight()) {
+//			imgV.fitWidthProperty().bind(anchor.widthProperty());
+//		} else {
+//			imgV.fitHeightProperty().bind(anchor.heightProperty());
+//		}
+//		
+//		// Handle touch-based zoom gestures
+//        imgV.setOnZoom(event -> {
+//        	System.out.println("zoom touch");
+//            double zoomFactor = event.getZoomFactor();
+//            imgV.setScaleX(imgV.getScaleX() * zoomFactor);
+//            imgV.setScaleY(imgV.getScaleY() * zoomFactor);
+//            event.consume(); // Mark the event as handled
+//        });
+//
+//        // Handle mouse wheel scrolling for zoom
+//        imgV.setOnScroll(event -> {
+//        	System.out.println("zoom mouse");
+//
+//            double deltaY = event.getDeltaY();
+//            // Adjust the zoom factor based on the scroll amount.
+//            // A small value like 1.01 provides a smooth zoom.
+//            double zoomFactor = (deltaY > 0) ? 1.05 : 1 / 1.05;
+//            
+//            // Check for a keyboard modifier (like CTRL) to prevent
+//            // accidental zooming from a simple scroll.
+//            if (event.isControlDown()) {
+//                imgV.setScaleX(imgV.getScaleX() * zoomFactor);
+//                imgV.setScaleY(imgV.getScaleY() * zoomFactor);
+//            }
+//            event.consume(); // Mark the event as handled
+//        });
+//		
+//		imgV.setOnZoom(event -> {
+//			double zoomFactor = event.getZoomFactor();
+//			imgV.setScaleX(imgV.getScaleX() * zoomFactor);
+//			imgV.setScaleY(imgV.getScaleY() * zoomFactor);
+//		});
+//
+//		Scene scene = new Scene(anchor, 600, 500);
+//		newWindow.setScene(scene);
+//		newWindow.show();
+//	}
+//}
+
 	/**
 	 * if operation is at the end delete normally. if in the middle provide
 	 * replacement operation.
-	 * 
+	 *
 	 * @param operationOut
 	 * @param operationReplacment
 	 * @return
@@ -40,8 +343,9 @@ public class archive {
 //					operationBackup = new Operation(operations.getLast());
 					operationBackup = new Operation(operationOut);
 					System.out.println("backup operation: " + operationBackup);
-					if (returnOperation(operations.getLast().getCustomer(), operations.getLast().getRentable()) != null)
-						result = true;// it takes care of status and customer
+					if (returnOperation(operations.getLast().getCustomer(), operations.getLast().getRentable()) != null) {
+						result = true;
+					}// it takes care of status and customer
 					if (!result) {
 						operations.add(operationBackup);
 						System.out.println("couldn't delete operation: " + operationBackup);
@@ -57,20 +361,22 @@ public class archive {
 				else {// 3 rent in middle
 					operation2Type = "return";
 					operation2 = searchOperationByCustomerAndRentable(customer, rentable, null, operation2Type);
-					if (operation2 != null)
-						for (Operation operation : operations)
+					if (operation2 != null) {
+						for (Operation operation : operations) {
 							if (operation2.getId() == operation.getId()) {
 								operationBackup = new Operation(operationOut);
-								if (returnOperation(operationOut.getCustomer(), operationOut.getRentable()) != null)
+								if (returnOperation(operationOut.getCustomer(), operationOut.getRentable()) != null) {
 									result = true;
+								}
 								if (!result) {// if failed to return then you can't delete op so add it back
 									operations.add(operationBackup);
 									System.out.println("couldn't delete operation: " + operationBackup);
 									return false;
 								}
 								operationBackup = new Operation(operation2);
-								if (returnOperation(operation2.getCustomer(), operation2.getRentable()) != null)
+								if (returnOperation(operation2.getCustomer(), operation2.getRentable()) != null) {
 									result = true;
+								}
 								if (!result) {// if failed to return then you can't delete op so add it back
 									operations.add(operationBackup);
 									System.out.println("couldn't delete operation: " + operationBackup);
@@ -80,15 +386,18 @@ public class archive {
 									operations.remove(operation2);
 									return result;
 								}
-							} // search for op2 by id
+							}
+						}
+					} // search for op2 by id
 				} // 3
 
 			} else {// type = return
 
 				if (operations.getLast().getId() == operationOut.getId()) {// 2 return at end
 					operationBackup = new Operation(operations.getLast());
-					if (returnOperation(operations.getLast().getCustomer(), operations.getLast().getRentable()) != null)
+					if (returnOperation(operations.getLast().getCustomer(), operations.getLast().getRentable()) != null) {
 						result = true;
+					}
 					if (!result) {// if failed to return then you can't delete op so add it back
 						operations.add(operationBackup);
 						System.out.println("couldn't delete operation: " + operationBackup);
@@ -103,8 +412,9 @@ public class archive {
 
 					if (!operations.contains(operationReplacment)) {// not contains replacement
 						operationBackup = new Operation(operationOut);
-						if (returnOperation(operationOut.getCustomer(), operationOut.getRentable()) != null)
+						if (returnOperation(operationOut.getCustomer(), operationOut.getRentable()) != null) {
 							result = true;
+						}
 						if (!result) {// if failed to return then you can't delete op so add it back
 							operations.add(operationBackup);
 							System.out.println("couldn't delete operation: " + operationBackup);
@@ -125,7 +435,7 @@ public class archive {
 
 	}
 
-	
+
 //  private static final Logger LOGGER = Logger.getLogger(InfoSys.class.getName());
 
 	//main
@@ -144,10 +454,10 @@ public class archive {
 //          // But the main application might stay alive.
 //      }
 //  });
-	
+
 //	/**
 //	 * probably the one that is used
-//	 * 
+//	 *
 //	 * @param operation
 //	 * @param customer
 //	 * @param rentable
@@ -190,10 +500,10 @@ public class archive {
 ////		System.out.println("--------return operation failed--------");
 //		return -1;
 //	}
-	
+
 //	/**
 //	 * probably not working coz i don't see add operation
-//	 * 
+//	 *
 //	 * @param operationOut
 //	 * @return
 //	 */
@@ -239,7 +549,7 @@ public class archive {
 //		}
 //		return result;
 //	}
-	
+
 //	private Image image;
 	//rentable
 //	public Image getImage() {
@@ -265,7 +575,7 @@ public class archive {
 //public void setImage(Image image) {
 //	this.image = image;
 //}
-	
+
 	//rentable
 //	public void setImagePath(String path) {
 //	// 1. Create a FileNameExtensionFilter for common image formats
@@ -294,7 +604,7 @@ public class archive {
 //        System.out.println("File selection cancelled.");
 //    }
 //}
-	
+
 //	/**
 //	 * Creates a snapshot of the item's data at a point in time. Subclasses should
 //	 * override this to add their specific fields.
@@ -306,8 +616,8 @@ public class archive {
 //		// Add any other common fields here
 //		return snapshot;
 //	}
-	
-	
+
+
 //	fillIdSet();
 //	initialize();
 //	System.out.println();
@@ -369,7 +679,7 @@ public class archive {
 //	car.setStatus(false);
 //	Operation o = new Operation(cit, car, new Date("auto"), "rent");
 //	operations.add(o);
-//	
+//
 //	Operation so = searchOperationByCustomerAndRentable(cit, car);
 //	System.out.println(so==o);
 //	System.out.println(so);
@@ -394,7 +704,7 @@ public class archive {
 	 * uses selectCustomerMenu() and selectRentableMenu() to select a customer and
 	 * rentable. and uses policyValuesOutcome() to check selected customer and
 	 * rentable if eligible to make a rent operation.
-	 * 
+	 *
 	 * @param customerId
 	 * @param rentableId
 	 * @param operation
@@ -426,7 +736,7 @@ public class archive {
 	 * rentable. and searches for operation using customer id and rentable id. then
 	 * if found it create return operation and alter the properties for customer and
 	 * rentable.
-	 * 
+	 *
 	 * @param customerId
 	 * @param rentableId
 	 * @return true= return operation successful, false= not successful do to (not
@@ -485,15 +795,15 @@ public class archive {
 //				}else
 //					operations.removeLast();
 //			}else {// 3 rent in the middle, search for return
-//				
+//
 //				for(Operation operation: operations.reversed()) {
 //					if(operation.equals(operationOut) && operation.getOperationType().equals("rent")) {
-//						
+//
 //					}
 //				}
 //			}
-//				
-//				
+//
+//
 //			for (Operation operationIterator : operations.reversed()) {
 //				if (operationIterator.equals(operationOut)
 //						&& operationIterator.getOperationType().equals("return")) {
@@ -540,12 +850,12 @@ public class archive {
 //	 * replace with returnOperatio() and makeOperationMenu()
 //	 * used in returnRentableOriginal and RentOperationController class. uses
 //	 * selectCustomerMenu(), selectRentable()
-//	 * 
+//	 *
 //	 * @param customerOut
 //	 * @param rentableOut
 //	 * @param operationOut
 //	 * @return true= success
-//	 * 
+//	 *
 //	 */
 //	public static boolean returnRentableOriginal(Customer customerOut, Rentable rentableOut, Operation operationOut) {
 //		Customer customer = customerOut;
@@ -570,7 +880,7 @@ public class archive {
 //				}
 //				switch (selection) {
 //				case 1: {
-//					
+//
 //					if (customer == null)
 //						customer = selectCustomerMenu(-1);
 //					if (rentable == null)
@@ -777,12 +1087,12 @@ public class archive {
 	/**
 	 * checks customer details to determine whether the customer is eligible to rent
 	 * or not. using rules/polices that are specific to each customer type.
-	 * 
+	 *
 	 * @param minAge                  citizen 16 for cars and realEstate, resident
 	 *                                18 cars, 20 realEstate
-	 * 
+	 *
 	 * @param expiry                  company not expired
-	 * 
+	 *
 	 * @param maxUnits,               maxCars citizen no limit for cars and
 	 *                                realEstate, resident 2 cars, 1 realEstate
 	 *                                company 10 cars, 10 units
@@ -1010,7 +1320,7 @@ public class archive {
 	 * checkCustomerId() and checkRentableId() why? to check if unique or not. if
 	 * unique why? it determines the type and adds the object to the appropriate
 	 * list.
-	 * 
+	 *
 	 * @param object
 	 * @return
 	 */
@@ -1031,7 +1341,7 @@ public class archive {
 //			if (returnOperation(operation.getCustomer(), operation.getRentable())) {
 //				operations.remove(operation);
 //				return true;
-//			} 
+//			}
 //			if (customer != null && rentable != null) {
 //				Operation op = searchOperationByCustomerAndRentable(customer, rentable, null);
 //				if (op != null) {
@@ -1155,7 +1465,7 @@ public class archive {
 //	}
 //}
 
-	
+
 	package proj01;
 
 	public class check {
@@ -1165,10 +1475,10 @@ public class archive {
 		void typeOfRentable() {}
 		void fillIdSet() {}
 		void initialize() {}
-		
+
 		void checkRentableId() {}
 		void checkCustomerId() {}
-		
+
 		void addObject() {
 			checkCustomerId();
 			checkRentableId();
@@ -1183,14 +1493,14 @@ public class archive {
 		void createRentableMenu() {
 			addObject();
 		}
-		
+
 		void searchCustomer() {
 			//typeOfCustomer();
 		}
 		void searchRentable() {
 			//typeOfRentable();
 		}
-		
+
 		void selectCustomerMenu() {
 			searchCustomer();
 		}
@@ -1213,7 +1523,7 @@ public class archive {
 			selectCustomerMenu();
 			selectRentableMenu();
 		}
-		
+
 		void report() {}
 		void listAvailUnavilRentables() { }
 		void listAllRentables() { }
@@ -1224,7 +1534,7 @@ public class archive {
 		void listAllRealEstates() {}
 		void listAllResidents() {}
 		void listAllCitizens() {}
-		
+
 		void read() {}
 		void readOld() {}
 		void save() {}
@@ -1235,8 +1545,8 @@ public class archive {
 		void alertWindow() {}
 	}
 
-	
-	
+
+
 //	package proj01;
 	//
 	//import java.time.LocalDate;

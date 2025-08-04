@@ -1,8 +1,6 @@
 package proj01;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 public class Car extends Rentable implements Serializable {
@@ -15,7 +13,7 @@ public class Car extends Rentable implements Serializable {
 
 	/**
 	 * copy constructor
-	 * 
+	 *
 	 * @param car
 	 */
 	public Car(Car car) {
@@ -40,7 +38,7 @@ public class Car extends Rentable implements Serializable {
 //
 //		return snapshot;
 //	}
-	
+
 //	public ArrayList<ArrayList<Object>> createSnapshot2() {
 //		// Start with the base class snapshot (name, price)
 //		ArrayList<ArrayList<Object>> snapshot = super.createSnapshot2();
@@ -75,8 +73,9 @@ public class Car extends Rentable implements Serializable {
 		boolean sameNumber = Objects.equals(this.getNumber(), c.getNumber());
 		boolean sameBrand = Objects.equals(this.getBrand(), c.getBrand());
 
-		if (sameNumber && samePlateNo && sameBrand && sameModel && sameMonthlyPrice)
+		if (sameNumber && samePlateNo && sameBrand && sameModel && sameMonthlyPrice) {
 			System.out.println("Car equals found by value not refrence");
+		}
 		return sameNumber && samePlateNo && sameBrand && sameModel && sameMonthlyPrice;
 	}
 
@@ -165,7 +164,7 @@ public class Car extends Rentable implements Serializable {
 		return "Car [number=" + getNumber() + ", status=" + isStatus() + ", plateNo=" + plateNo + ", brand=" + brand
 				+ ", model=" + model + ", monthlyPrice=" + monthlyPrice + "]";
 	}
-	
+
 	@Override
 	public String toString(String str) {
 //		return "Car "+str+" [number=" + getNumber() + ", status=" + isStatus() + ", plateNo=" + plateNo + ", brand=" + brand

@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj01.controllers.AddCustomerController">
    <children>
       <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
@@ -65,8 +64,8 @@
                                     <Label fx:id="nationalNoLabel" alignment="CENTER" contentDisplay="BOTTOM" text="National No: " GridPane.rowIndex="2" />
                                     <Button fx:id="addCitizenBtn" mnemonicParsing="false" onAction="#onAddCitizen" prefWidth="75.0" text="Add" GridPane.columnIndex="4" />
                                     <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#onDelete" prefWidth="75.0" text="Delete" GridPane.columnIndex="5" />
-                                    <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                    <Button fx:id="goBackBtn" mnemonicParsing="false" onAction="#onGoBack" prefWidth="75.0" text="Go Back" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Button fx:id="addImageCitizenBtn" mnemonicParsing="false" onAction="#onAddImageCitizen" prefWidth="75.0" text="Add Image" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                     <AnchorPane GridPane.columnIndex="6" GridPane.rowSpan="3">
                                        <GridPane.margin>
                                           <Insets />
@@ -138,8 +137,8 @@
                                     <Label fx:id="birthDateLabel1" contentDisplay="BOTTOM" text="Birth Date: " GridPane.columnIndex="2" />
                                     <Button fx:id="addResidentBtn" mnemonicParsing="false" onAction="#onAddResident" prefWidth="75.0" text="Add" GridPane.columnIndex="4" />
                                     <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#onDelete" prefWidth="75.0" text="Delete" GridPane.columnIndex="5" />
-                                    <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                    <Button fx:id="goBackBtn" mnemonicParsing="false" onAction="#onGoBack" prefWidth="75.0" text="Go Back" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Button fx:id="addImageResidentBtn" mnemonicParsing="false" onAction="#onAddImageResident" prefWidth="75.0" text="Add Image" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                     <AnchorPane GridPane.columnIndex="6" GridPane.rowSpan="3">
                                        <children>
                                           <ImageView fx:id="residentImageView" fitHeight="96.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
@@ -193,9 +192,9 @@
                                  </rowConstraints>
                                  <children>
                                     <Button fx:id="addCompanyBtn" mnemonicParsing="false" onAction="#onAddCompany" prefWidth="75.0" text="Add" GridPane.columnIndex="4" />
-                                    <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                                     <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#onDelete" prefWidth="75.0" text="Delete" GridPane.columnIndex="5" />
-                                    <Button fx:id="goBackBtn" mnemonicParsing="false" onAction="#onGoBack" prefWidth="75.0" text="Go Back" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Button fx:id="addImageCompanyBtn" mnemonicParsing="false" onAction="#onAddImageCompany" prefWidth="75.0" text="Add Image" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                     <Label fx:id="expiryDateLabel" contentDisplay="BOTTOM" text="Expiry Date: " GridPane.columnIndex="2" />
                                     <DatePicker fx:id="expiryDateField" promptText="1/1/1980" GridPane.columnIndex="3" />
                                     <Label fx:id="companyIdLabel" alignment="CENTER" contentDisplay="BOTTOM" text="ID: " />

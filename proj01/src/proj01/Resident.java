@@ -20,7 +20,7 @@ public class Resident extends Customer implements Serializable {
 		setNationality();
 		setbDate();
 	}
-	
+
 	public Resident(int id, String name, int residence, String passportNo, String nationality, Date bDate) {
 		super(id, name);
 		this.residence = residence;
@@ -28,10 +28,10 @@ public class Resident extends Customer implements Serializable {
 		this.nationality = nationality;
 		this.birthDate = bDate;
 	}
-	
+
 	/**
 	 * copy constructor
-	 * 
+	 *
 	 * @param resident
 	 */
 	public Resident(Resident resident) {
@@ -53,7 +53,7 @@ public class Resident extends Customer implements Serializable {
 	}
 
 	/**
-	 * this method is used to compare residents with other residents 
+	 * this method is used to compare residents with other residents
 	 * objects to determine if they are the same or not.
 	 */
 	@Override
@@ -75,22 +75,23 @@ public class Resident extends Customer implements Serializable {
 //		boolean sameNationality = this.nationality.equals(r.getNationality());
 //		boolean sameBirthDate = this.getStringBirthDate().equals(r.getStringBirthDate());
 
-		//this is the correct way to compare mutable objects it compares the 
-		//values not the refrences and Object class prevent null exception 
+		//this is the correct way to compare mutable objects it compares the
+		//values not the refrences and Object class prevent null exception
 		boolean sameName = Objects.equals(this.getName(), r.getName());
 		boolean samePassport = Objects.equals(this.passportNo, r.getPassportNo());
 		boolean sameNationality = Objects.equals(this.nationality, r.getNationality());
 		boolean sameBirthDate = Objects.equals(this.getStringBirthDate(), r.getStringBirthDate());
 
-		if (sameId && sameName && sameResidence && samePassport && sameNationality && sameBirthDate)
+		if (sameId && sameName && sameResidence && samePassport && sameNationality && sameBirthDate) {
 			System.out.println("Resident equals found by value not refrence");
+		}
 		return sameId && sameName && sameResidence && samePassport && sameNationality && sameBirthDate;
 	}
 
 	/**
 	 * returns date as string with no breaks as DayMonthYear e.x: 01011999 =
 	 * 01/01/1999
-	 * 
+	 *
 	 * @return
 	 */
 	public String getStringBirthDate() {
@@ -219,8 +220,9 @@ public class Resident extends Customer implements Serializable {
 		for (Rentable r : getCustomerRentables()) {
 			sb.append("    ").append(r).append("\n");
 		}
-		if (!getCustomerRentables().isEmpty())
+		if (!getCustomerRentables().isEmpty()) {
 			sb.append("  ]\n");
+		}
 
 		sb.append("    noOfUnits=").append(getNoOfUnits()).append(", ");
 		sb.append("    noOfCars=").append(getNoOfCars()).append("\n");

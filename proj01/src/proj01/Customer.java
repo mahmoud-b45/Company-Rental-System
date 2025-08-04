@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.scene.image.Image;
@@ -46,7 +47,7 @@ public class Customer implements Serializable {
 
 	/**
 	 * copy constructor
-	 * 
+	 *
 	 * @param customer
 	 */
 	public Customer(Customer customer) {// copy
@@ -59,14 +60,16 @@ public class Customer implements Serializable {
 	}
 
 	private ArrayList<Rentable> deepCopy(ArrayList<Rentable> originalArray) {
-		if (originalArray == null)
+		if (originalArray == null) {
 			return null;
+		}
 		ArrayList<Rentable> newArray = new ArrayList<>();
 		for (Rentable rentable : originalArray) {
-			if (rentable instanceof Car car)
+			if (rentable instanceof Car car) {
 				newArray.add(new Car(car));
-			else if (rentable instanceof RealEstate realEstate)
+			} else if (rentable instanceof RealEstate realEstate) {
 				newArray.add(new RealEstate(realEstate));
+			}
 		}
 		return newArray;
 	}
@@ -82,9 +85,9 @@ public class Customer implements Serializable {
 			return true;
 		}
 //		if (customer == null || !(customer instanceof Customer))
-		if (customer == null || getClass() != customer.getClass())
-
+		if (customer == null || getClass() != customer.getClass()) {
 			return false;
+		}
 
 		Customer c = (Customer) customer;
 		boolean sameId = this.id == c.getId();
@@ -112,7 +115,7 @@ public class Customer implements Serializable {
 	 * and name of customer. map class to create 1 to 1 collection. keys are unique
 	 * and it can't be ordered and dosen't allow duplicate keys. and fast for
 	 * lookups, insertion and deletion.
-	 * 
+	 *
 	 * @return
 	 */
 	public Map<String, Object> createSnapshot() {
@@ -140,13 +143,14 @@ public class Customer implements Serializable {
 	/**
 	 * this is setter is used by the console app. if user enters 0 it cancels the
 	 * process and customer creation.
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean setName() {
 		this.name = enterDetails(getClass().getSimpleName() + " name: (" + this.name + ")");
-		if (name.equals("0"))
+		if (name.equals("0")) {
 			return false;
+		}
 		return true;
 	}
 
@@ -170,8 +174,9 @@ public class Customer implements Serializable {
 	public String printRentables() {
 		String str = "";
 		if (!customerRentables.isEmpty()) {
-			for (Rentable ren : customerRentables)
+			for (Rentable ren : customerRentables) {
 				str += ("\t" + ren.toString("\t") + ",\n ");
+			}
 			return str.substring(0, str.length() - 3);
 		}
 		return str;
@@ -180,7 +185,7 @@ public class Customer implements Serializable {
 	/**
 	 * this method checks id if it's duplicate or unique before setting it to the
 	 * customer. if user enters 0 it cancels the process and customer creation.
-	 * 
+	 *
 	 * @return
 	 * @throws CancelException
 	 */
@@ -190,8 +195,9 @@ public class Customer implements Serializable {
 			do {
 				id = 0;
 				this.id = Integer.parseInt(enterDetails(getClass().getSimpleName() + " ID: (" + this.id + ")"));
-				if (id == 0)
+				if (id == 0) {
 					throw new CancelException("you entered 0 to exit");
+				}
 				isDuplicate = InfoSys.checkCustomerId(this.id);
 				if (isDuplicate) {// true=duplicate/not unique
 					System.out.println("\nduplicate id...\nenter a different id.\n");
@@ -241,7 +247,7 @@ public class Customer implements Serializable {
 		// on the top.
 		JFrame frame = new JFrame("My Application");
 		frame.setSize(400, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null); // Center the frame
 
 		JFileChooser fileChooser = new JFileChooser();
@@ -292,14 +298,15 @@ public class Customer implements Serializable {
 						getClass().getSimpleName() + " removed rentable successfully. realestate count is: " + noOfUnits);
 				return true;
 			}
-		} else
+		} else {
 			InfoSys.alertWindow("customer rentables list already empty");
+		}
 		return false;
 	}
 
 	/**
 	 * the purpose of this method is to not repeat code of user input
-	 * 
+	 *
 	 * @param str
 	 * @return
 	 */

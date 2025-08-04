@@ -75,9 +75,9 @@ public class OperationSnapshot implements Serializable{
 		} else if (rentable instanceof RealEstate real) {
 			setRealestateType(real.getType());
 			setRealEstateLocation(real.getLocation());
-		} 
+		}
 	}
-	
+
 	public String getOperationType() {
 		return operationType;
 	}
@@ -285,7 +285,7 @@ public class OperationSnapshot implements Serializable{
 	void customerSnapshot() {
 
 	}
-	
+
 	@Override
 	public String toString() {
 		return "OperationSnapshot [operationDate=" + operationDate + ", operationId=" + operationId + ", operationType="

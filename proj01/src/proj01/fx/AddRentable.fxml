@@ -46,8 +46,8 @@
                                        <children>
                                           <Button fx:id="addCarBtn" mnemonicParsing="false" onAction="#onAddCar" prefWidth="75.0" text="Add" GridPane.columnIndex="4" />
                                           <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#onDelete" prefWidth="75.0" text="Delete" GridPane.columnIndex="5" />
-                                          <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                          <Button fx:id="goBackBtn" mnemonicParsing="false" onAction="#onGoBack" prefWidth="75.0" text="Go Back" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <Button fx:id="addImageCarBtn" mnemonicParsing="false" onAction="#onAddImageCar" prefWidth="75.0" text="Add Image" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                           <Label fx:id="carIDLabel" alignment="CENTER" contentDisplay="BOTTOM" text="ID: " />
                                           <Label fx:id="carPlateNoLabel" alignment="CENTER" contentDisplay="BOTTOM" text="plateNo: " GridPane.rowIndex="1" />
                                           <Label fx:id="carBrandLabel" alignment="CENTER" contentDisplay="BOTTOM" text="brand: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -116,8 +116,8 @@
                                        <children>
                                           <Button fx:id="addRealEstateBtn" mnemonicParsing="false" onAction="#onAddRealEstate" prefWidth="75.0" text="Add" GridPane.columnIndex="4" />
                                           <Button fx:id="deleteBtn1" mnemonicParsing="false" onAction="#onDelete" prefWidth="75.0" text="Delete" GridPane.columnIndex="5" />
-                                          <Button fx:id="clearBtn1" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                          <Button fx:id="goBackBtn1" mnemonicParsing="false" onAction="#onGoBack" prefWidth="75.0" text="Go Back" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <Button fx:id="clearBtn1" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <Button fx:id="addImageRealEstateBtn" mnemonicParsing="false" onAction="#onAddImageRealEstate" prefWidth="75.0" text="Add Image" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                           <Label fx:id="realEstateIDLabel" alignment="CENTER" contentDisplay="BOTTOM" text="ID: " />
                                           <Label fx:id="realEstateTypeLabel" alignment="CENTER" contentDisplay="BOTTOM" text="type: " GridPane.rowIndex="1" />
                                           <Label fx:id="realEstateLocationLabel" alignment="CENTER" contentDisplay="BOTTOM" text="location: " GridPane.rowIndex="2" />

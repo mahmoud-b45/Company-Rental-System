@@ -14,7 +14,7 @@ public class Company extends Customer implements Serializable {
 
 	/**
 	 * copy constructor
-	 * 
+	 *
 	 * @param car
 	 */
 	public Company(Company company) {
@@ -35,7 +35,7 @@ public class Company extends Customer implements Serializable {
 
 	/**
 	 * test
-	 * 
+	 *
 	 * @param company
 	 * @return
 	 */
@@ -62,15 +62,16 @@ public class Company extends Customer implements Serializable {
 		boolean sameLicenceNo = Objects.equals(this.licenceNo, c.getLicenceNo());
 		boolean sameBirthDate = Objects.equals(this.getStringExpiryDate(), c.getStringExpiryDate());
 
-		if (sameId && sameName && sameLicenceNo && sameLocation && sameExpiryDate)
+		if (sameId && sameName && sameLicenceNo && sameLocation && sameExpiryDate) {
 			System.out.println("Company equals found by value not refrence");
+		}
 		return sameId && sameName && sameLicenceNo && sameLocation && sameExpiryDate;
 	}
 
 	/**
 	 * returns date as string with no breaks as DayMonthYear e.x: 01011999 =
 	 * 01/01/1999
-	 * 
+	 *
 	 * @return
 	 */
 	public String getStringExpiryDate() {
@@ -156,8 +157,9 @@ public class Company extends Customer implements Serializable {
 		for (Rentable r : getCustomerRentables()) {
 			sb.append("    ").append(r).append(" ");
 		}
-		if (!getCustomerRentables().isEmpty())
+		if (!getCustomerRentables().isEmpty()) {
 			sb.append("  ] ");
+		}
 
 		sb.append("    noOfUnits=").append(getNoOfUnits()).append(", ");
 		sb.append("    noOfCars=").append(getNoOfCars()).append(" ");
