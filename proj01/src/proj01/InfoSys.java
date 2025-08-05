@@ -828,6 +828,7 @@ public class InfoSys extends Application {
 		return null;
 	}
 
+	
 	public static <T, E> boolean policy(T customer, E rentable) {
 		// citizen conditions
 		int minAgeCitizen = 16;
