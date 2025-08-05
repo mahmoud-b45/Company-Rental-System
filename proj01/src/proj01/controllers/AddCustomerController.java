@@ -3,15 +3,10 @@ package proj01.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
-import javax.naming.Binding;
-
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -113,7 +108,7 @@ public class AddCustomerController implements Initializable {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-	
+
 	Stage newWindow = new Stage();
 
 	void openImageInNewWindow(ImageView imageView) {
@@ -122,7 +117,7 @@ public class AddCustomerController implements Initializable {
 		imgV.setImage(imageView.getImage());
 		imgV.setPreserveRatio(true);
 		StackPane pane = new StackPane(imgV);
-		
+
 		if (imgV.getImage().getWidth() > imgV.getImage().getHeight()) {
 			imageView.fitWidthProperty().bind(pane.widthProperty());
 		} else {
@@ -132,7 +127,7 @@ public class AddCustomerController implements Initializable {
 		newWindow.setScene(scene);
 		newWindow.show();
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { // this method runs always when the scene loads
 		// initilize the error window for when it happen it will be ready to show up
@@ -149,7 +144,7 @@ public class AddCustomerController implements Initializable {
 //        Observable<Boolean> booleanObservable = Observable.just(booleanValue);
 //        BooleanProperty myBooleanProperty = new SimpleBooleanProperty(booleanValue);
 //        addImageCitizenBtn.disableProperty().bind(citizenTable.getSelectionModel().selectedItemProperty().isNull());
-		
+
 		// enable addImage btn after selecting a customer
 		addImageCitizenBtn.disableProperty().bind(Bindings.isEmpty(citizenTable.getSelectionModel().getSelectedItems()));// method 1
 		addImageResidentBtn.disableProperty().bind(residentTable.getSelectionModel().selectedItemProperty().isNull());// method 2
@@ -171,7 +166,7 @@ public class AddCustomerController implements Initializable {
 				openImageInNewWindow(residentImageView);
 			}
 		});
-		
+
 		addCitizenBtn.disableProperty()
 				.bind(citizenIdField.textProperty().isEmpty().or(citizenNameField.textProperty().isEmpty())
 						.or(citizenNationalNoColumn.textProperty().isEmpty())
@@ -201,7 +196,7 @@ public class AddCustomerController implements Initializable {
 				companiesList.add((Company) customer);
 			}
 		}
-		
+
 		// change arraylist to observable list
 		citizensObservableList = FXCollections.observableArrayList(citizensList);
 		residentsObservableList = FXCollections.observableArrayList(residentsList);

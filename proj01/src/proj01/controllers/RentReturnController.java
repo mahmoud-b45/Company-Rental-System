@@ -7,12 +7,9 @@ import java.util.ResourceBundle;
 
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -20,28 +17,21 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ZoomEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 //import javafx.util.converter.IntegerStringConverter;
@@ -101,7 +91,7 @@ public class RentReturnController implements Initializable {
 	private ObservableList<Rentable> rentablesObservableList;
 	private ObservableList<Operation> operationsObservableList;
 	private FilteredList<Operation> operationsFilteredData;
-	
+
 	@FXML
 	private Label errorLabel, noOfOperations, noOfProperties, noOfCars, noOfCitizens, noOfResidents, noOfCompanies;
 	@FXML
@@ -118,7 +108,7 @@ public class RentReturnController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		rentOperationBtn.disableProperty().bind(customerIdField.textProperty().isEmpty());
 		rentOperationBtn.disableProperty().bind(rentableIdField.textProperty().isEmpty());
 
@@ -137,7 +127,7 @@ public class RentReturnController implements Initializable {
 		customersObservableList = FXCollections.observableArrayList(customers);
 		rentablesObservableList = FXCollections.observableArrayList(rentables);
 		operationsObservableList = FXCollections.observableArrayList(operations);
-		
+
 		imageView.setPreserveRatio(true);
 		imageView.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
@@ -153,7 +143,7 @@ public class RentReturnController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void setColCustomersTable() throws IOException {
 		// first we fill the table with objects in the intilization phase
 		// then we read the values
@@ -244,17 +234,19 @@ public class RentReturnController implements Initializable {
 		customerBirthDateCol.setCellValueFactory(e -> {
 			if (e.getValue() instanceof Resident res) {
 				return new SimpleStringProperty(String.valueOf(res.getBirthDate()));
-			} else if (e.getValue() instanceof Citizen cit)
+			} else if (e.getValue() instanceof Citizen cit) {
 				return new SimpleStringProperty(String.valueOf(cit.getBirthDate()));
-			else
+			} else {
 				return new SimpleStringProperty("-");
+			}
 		});
 		customerBirthDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		customerBirthDateCol.setOnEditCommit(e -> {
 			if (e.getRowValue() instanceof Resident res) {
 				res.setBirthDate(new Date(e.getNewValue()));
-			} else if (e.getRowValue() instanceof Citizen cit)
+			} else if (e.getRowValue() instanceof Citizen cit) {
 				cit.setBirthDate(new Date(e.getNewValue()));
+			}
 		});
 
 		companyExpiryDateCol.setCellValueFactory(e -> {
@@ -295,25 +287,35 @@ public class RentReturnController implements Initializable {
 				// Compare person's details with filter text.
 				String lowerCaseFilter = newValue.toLowerCase();
 
-				if (customersFilterComboBox.getValue().equals("ID"))
-					if (String.valueOf(customer.getId()).contains(lowerCaseFilter))
+				if (customersFilterComboBox.getValue().equals("ID")) {
+					if (String.valueOf(customer.getId()).contains(lowerCaseFilter)) {
 						return true; // Filter matches id.
+					}
+				}
 
-				if (customersFilterComboBox.getValue().equals("Name"))
-					if (customer.getName().toLowerCase().contains(lowerCaseFilter))
+				if (customersFilterComboBox.getValue().equals("Name")) {
+					if (customer.getName().toLowerCase().contains(lowerCaseFilter)) {
 						return true; // Filter matches name.
+					}
+				}
 				if (customer instanceof Citizen citizen) {
-					if (customersFilterComboBox.getValue().equals("National No"))
-						if (String.valueOf(citizen.getNationalNo()).toLowerCase().contains(lowerCaseFilter))
+					if (customersFilterComboBox.getValue().equals("National No")) {
+						if (String.valueOf(citizen.getNationalNo()).toLowerCase().contains(lowerCaseFilter)) {
 							return true; // Filter matches name.
+						}
+					}
 				} else if (customer instanceof Resident resident) {
-					if (customersFilterComboBox.getValue().equals("Passport No"))
-						if (String.valueOf(resident.getPassportNo()).toLowerCase().contains(lowerCaseFilter))
+					if (customersFilterComboBox.getValue().equals("Passport No")) {
+						if (String.valueOf(resident.getPassportNo()).toLowerCase().contains(lowerCaseFilter)) {
 							return true; // Filter matches name.
+						}
+					}
 				} else if (customer instanceof Company company) {
-					if (customersFilterComboBox.getValue().equals("Licence No"))
-						if (String.valueOf(company.getLicenceNo()).toLowerCase().contains(lowerCaseFilter))
+					if (customersFilterComboBox.getValue().equals("Licence No")) {
+						if (String.valueOf(company.getLicenceNo()).toLowerCase().contains(lowerCaseFilter)) {
 							return true; // Filter matches name.
+						}
+					}
 				}
 				return false; // Does not match.
 			});
@@ -403,13 +405,13 @@ public class RentReturnController implements Initializable {
 			noOfResidents.setText(
 					String.valueOf(customersObservableList.stream().filter(Resident.class::isInstance).count()));
 		});
-		
+
 		ObservableList<String> list = FXCollections.observableArrayList();
 		list.addAll(/*"Ongoing Operations",*/ "ID", "Price");
 		operationsFilterComboBox.setItems(list);
 		operationsFilterComboBox.setValue("ID");
 		operationsFilteredData=new FilteredList<>(operationsObservableList, p -> true);
-		
+
 		// 6. Add a listener to the text property of the search field
 		operationsSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
 			operationsFilteredData.setPredicate(operation -> {
@@ -420,22 +422,26 @@ public class RentReturnController implements Initializable {
 				// Compare person's details with filter text.
 				String lowerCaseFilter = newValue.toLowerCase();
 
-				if (operationsFilterComboBox.getValue().equals("ID"))
-					if (String.valueOf(operation.getOperationSnapshot().getOperationId()).contains(lowerCaseFilter))
+				if (operationsFilterComboBox.getValue().equals("ID")) {
+					if (String.valueOf(operation.getOperationSnapshot().getOperationId()).contains(lowerCaseFilter)) {
 						return true; // Filter matches id.
+					}
+				}
 
-				if (operationsFilterComboBox.getValue().equals("Price"))
-					if (String.valueOf(operation.getOperationSnapshot().getPrice()).toLowerCase().contains(lowerCaseFilter))
+				if (operationsFilterComboBox.getValue().equals("Price")) {
+					if (String.valueOf(operation.getOperationSnapshot().getPrice()).toLowerCase().contains(lowerCaseFilter)) {
 						return true; // Filter matches name.
-				
+					}
+				}
+
 //				if (operationsFilterComboBox.getValue().equals("Ongoing Operations"))
 //					if (String.valueOf(operation.getOperationSnapshot().getOperationId()).contains(lowerCaseFilter))
 //						return true; // Filter matches id.
-				
+
 				return false; // Does not match.
 			});
 		});
-		
+
 		operationsTable.setItems(operationsFilteredData);
 		operationsTable.setEditable(true);
 		operationsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -537,33 +543,44 @@ public class RentReturnController implements Initializable {
 			rentableFilteredData.setPredicate(rentable -> {
 
 				// If filter text is empty, display all persons.
-				if (newValue == null || newValue.isEmpty())
+				if (newValue == null || newValue.isEmpty()) {
 					return true;
+				}
 
 				String lowerCaseFilter = newValue.toLowerCase();
 
 				// shared details between car and realestate
-				if (rentablesFilterComboBox.getValue().equals("ID"))
-					if (rentable.getNumber().toLowerCase().contains(lowerCaseFilter))
+				if (rentablesFilterComboBox.getValue().equals("ID")) {
+					if (rentable.getNumber().toLowerCase().contains(lowerCaseFilter)) {
 						return true;
-				if (rentablesFilterComboBox.getValue().equals("Price"))
-					if (String.valueOf(rentable.getMonthlyPrice(rentable)).contains(lowerCaseFilter))
+					}
+				}
+				if (rentablesFilterComboBox.getValue().equals("Price")) {
+					if (String.valueOf(rentable.getMonthlyPrice(rentable)).contains(lowerCaseFilter)) {
 						return true;
+					}
+				}
 
 				if (rentable instanceof Car car) {
 					// Compare car details with filter text.
-					if (rentablesFilterComboBox.getValue().equals("Plate No"))
-						if (String.valueOf(car.getPlateNo()).contains(lowerCaseFilter))
+					if (rentablesFilterComboBox.getValue().equals("Plate No")) {
+						if (String.valueOf(car.getPlateNo()).contains(lowerCaseFilter)) {
 							return true;
-					if (rentablesFilterComboBox.getValue().equals("Brand"))
-						if (car.getBrand().contains(lowerCaseFilter))
+						}
+					}
+					if (rentablesFilterComboBox.getValue().equals("Brand")) {
+						if (car.getBrand().contains(lowerCaseFilter)) {
 							return true;
+						}
+					}
 
 				} else if (rentable instanceof RealEstate realestate) {
 					// compare realEstate details
-					if (rentablesFilterComboBox.getValue().equals("RealEstate Type"))
-						if (realestate.getType().contains(lowerCaseFilter))
+					if (rentablesFilterComboBox.getValue().equals("RealEstate Type")) {
+						if (realestate.getType().contains(lowerCaseFilter)) {
 							return true;
+						}
+					}
 				}
 				return false; // Does not match.
 			});

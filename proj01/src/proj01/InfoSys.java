@@ -893,7 +893,7 @@ public class InfoSys extends Application {
 							+ minAgeResidentRealEstate + "\nNo. of realEstates owned: " + resident.getNoOfUnits()
 							+ "\nNo. of realEstates allowed: " + noRealEstatesResident + "\nPolicy result: "
 							+ policyResult);
-				}//2.2.1 
+				}//2.2.1
 				return policyResult;
 			}// 2.2
 

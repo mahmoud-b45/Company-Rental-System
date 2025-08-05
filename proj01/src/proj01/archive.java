@@ -13,7 +13,7 @@ import proj01.controllers.MainController;
 
 public class archive {
 
-	
+
 	//removedOperation operationsTable.getSelectionModel().getSelectedItem();
 	//operationsObservableList.remove(operation);
 	//InfoSys.returnRentable(removedOperation.getCustomer(),removedOperation.getRentable(),removedOperation);
@@ -32,14 +32,14 @@ public class archive {
 	//operationsTable.refresh();
 	//customersTable.refresh();
 	//rentablesTable.refresh();
-	
+
 	@FXML
 	void onGoBack(ActionEvent event) throws Exception {
 
 		MainController controller = master("/proj01/fx/designMain.fxml").getController();
 		controller.setStage(stage);
 	}
-	
+
 //	String str = rentablesTable.getSelectionModel().getSelectedItem().getImage();
 //	Image image= new Image(str);
 //	imageView.setImage(image);
@@ -68,7 +68,7 @@ public class archive {
 //			imageView.setImage(null);
 //		}
 //	});
-	
+
 //	// search
 //	FilteredList<Rentable> rentableFilteredData = new FilteredList<>(rentablesObservableList, p -> true);
 //	rentableIdField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -133,7 +133,7 @@ public class archive {
 //		noOfCars.setText(String.valueOf(rentablesObservableList.stream().filter(Car.class::isInstance).count()));
 //
 //	});
-	
+
 //	void openImageInNewWindow(ImageView originalImageView) {
 //    ImageView imgV = new ImageView(originalImageView.getImage());
 //
@@ -147,7 +147,7 @@ public class archive {
 //
 //        // 2. Create a ScrollPane and place the Group inside.
 //        ScrollPane scrollPane = new ScrollPane(innerGroup);
-//        
+//
 //        // This is no longer necessary as the Group will handle the size.
 //        // scrollPane.setFitToWidth(true);
 //        // scrollPane.setFitToHeight(true);
@@ -175,7 +175,7 @@ public class archive {
 //            if (newScale >= 0.1 && newScale <= 10.0) { // Example range
 //                // Get the coordinates of the mouse within the ScrollPane
 //                Point2D mousePosition = new Point2D(event.getX(), event.getY());
-//                
+//
 //                // Adjust the pivot point for the zoom to be at the mouse cursor
 //                scrollPane.setHvalue(calculateScrollValue(scrollPane.getHvalue(), scrollPane.getWidth(), mousePosition.getX(), zoomFactor));
 //                scrollPane.setVvalue(calculateScrollValue(scrollPane.getVvalue(), scrollPane.getHeight(), mousePosition.getY(), zoomFactor));
@@ -183,10 +183,10 @@ public class archive {
 //                innerGroup.setScaleX(newScale);
 //                innerGroup.setScaleY(newScale);
 //            }
-//            
+//
 //            event.consume();
 //        });
-//        
+//
 //        // Optional: add a ZoomEvent handler for touch devices
 //        scrollPane.addEventFilter(ZoomEvent.ANY, event -> {
 //            double zoomFactor = event.getZoomFactor();
@@ -216,13 +216,13 @@ public class archive {
 //
 //    ImageView imgV = new ImageView(originalImageView.getImage());
 //    if (imgV.getImage() != null) {
-//        
+//
 //        imgV.setPreserveRatio(true);
 //
 //        // Use a StackPane as the content of the ScrollPane.
 //        // This is a good practice to ensure centering and correct sizing.
 //        StackPane container = new StackPane(imgV);
-//        
+//
 //        // Use a ScrollPane and set the StackPane as its content
 //        ScrollPane scrollPane = new ScrollPane();
 //        scrollPane.setContent(container);
@@ -246,14 +246,14 @@ public class archive {
 //            if (event.getDeltaY() < 0) {
 //                zoomFactor = 1 / zoomFactor;
 //            }
-//            
+//
 //            // Apply the zoom to the ImageView's scale
 //            imgV.setScaleX(imgV.getScaleX() * zoomFactor);
 //            imgV.setScaleY(imgV.getScaleY() * zoomFactor);
-//            
+//
 //            event.consume();
 //        });
-//        
+//
 //        // Show the window with the ScrollPane as the root
 //        Scene scene = new Scene(scrollPane, 600, 500);
 //        newWindow.setScene(scene);
@@ -262,9 +262,9 @@ public class archive {
 //}
 
 //void openImageInNewWindow(ImageView originalImageView) {
-//	
+//
 //	ImageView imgV = new ImageView(originalImageView.getImage());
-//	
+//
 //	if (imgV.getImage() != null) {
 //		imgV.setPreserveRatio(true);
 //		StackPane anchor = new StackPane(imgV);
@@ -273,7 +273,7 @@ public class archive {
 //		} else {
 //			imgV.fitHeightProperty().bind(anchor.heightProperty());
 //		}
-//		
+//
 //		// Handle touch-based zoom gestures
 //        imgV.setOnZoom(event -> {
 //        	System.out.println("zoom touch");
@@ -291,7 +291,7 @@ public class archive {
 //            // Adjust the zoom factor based on the scroll amount.
 //            // A small value like 1.01 provides a smooth zoom.
 //            double zoomFactor = (deltaY > 0) ? 1.05 : 1 / 1.05;
-//            
+//
 //            // Check for a keyboard modifier (like CTRL) to prevent
 //            // accidental zooming from a simple scroll.
 //            if (event.isControlDown()) {
@@ -300,7 +300,7 @@ public class archive {
 //            }
 //            event.consume(); // Mark the event as handled
 //        });
-//		
+//
 //		imgV.setOnZoom(event -> {
 //			double zoomFactor = event.getZoomFactor();
 //			imgV.setScaleX(imgV.getScaleX() * zoomFactor);

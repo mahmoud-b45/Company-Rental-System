@@ -1,6 +1,5 @@
 package proj01.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -11,9 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -91,7 +88,7 @@ public class AddRentableController implements Initializable {
 		imgV.setImage(imageView.getImage());
 		imgV.setPreserveRatio(true);
 		StackPane pane = new StackPane(imgV);
-		
+
 		if (imgV.getImage().getWidth() > imgV.getImage().getHeight()) {
 			imageView.fitWidthProperty().bind(pane.widthProperty());
 		} else {
@@ -111,7 +108,7 @@ public class AddRentableController implements Initializable {
 		// enable addImage btn after selecting a car/realestate
 		addImageCarBtn.disableProperty().bind(Bindings.isEmpty(carTable.getSelectionModel().getSelectedItems()));// method 1
 		addImageRealEstateBtn.disableProperty().bind(carTable.getSelectionModel().selectedItemProperty().isNull());// method 2
-		
+
 		// listen for double click and view image in a new window
 		carImageView.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {

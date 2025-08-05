@@ -132,7 +132,7 @@ public class Company extends Customer implements Serializable {
 		this.expiryDate = new Date(true);
 	}
 /**
- * 
+ *
  * @return True=expired, False=not expired.
  */
 	public boolean isExpired() {
