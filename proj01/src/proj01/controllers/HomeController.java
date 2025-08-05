@@ -37,7 +37,7 @@ public class HomeController {
 	}
 
 	@FXML
-	public void initilize() {
+	public void initialize() {
 		if (!InfoSys.operations.isEmpty()) {
 			// Initialize main screen lables and charts
 			if (carsListInfo() != null && realEstateListInfo() != null) {// if true then infosys.operations is not empty

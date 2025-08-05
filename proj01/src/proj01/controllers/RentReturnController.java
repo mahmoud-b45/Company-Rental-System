@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -71,8 +72,9 @@ public class RentReturnController implements Initializable {
 			residentPassportNoCol, residentResidenceNoCol, customerTypeCol, NoOfUnitsCol, NoOfCarsCol;
 
 	@FXML
-	private TableColumn<Operation, String> operationCustomerTypeCol, operationCustomerNameCol, operationCustomerIdCol,
-			operationRentableTypeCol, operationTypeCol, operationRentableIdCol, operationDateCol, operationAmountCol;
+	private TableColumn<Operation, String> operationCustomerTypeCol, operationIDCol, operationCustomerNameCol,
+			operationCustomerIdCol, operationRentableTypeCol, operationTypeCol, operationRentableIdCol,
+			operationDateCol, operationAmountCol;
 
 	@FXML
 	private Button clearBtn, deleteOperationBtn, goBackBtn, rentOperationBtn, returnOperationBtn;
@@ -98,12 +100,12 @@ public class RentReturnController implements Initializable {
 	private ObservableList<Customer> customersObservableList;
 	private ObservableList<Rentable> rentablesObservableList;
 	private ObservableList<Operation> operationsObservableList;
-
+	private FilteredList<Operation> operationsFilteredData;
+	
 	@FXML
 	private Label errorLabel, noOfOperations, noOfProperties, noOfCars, noOfCitizens, noOfResidents, noOfCompanies;
 	@FXML
 	private StackPane imageStackPane;
-//	private AnchorPane imageStackPane;
 
 	@FXML
 	private ImageView imageView;
@@ -114,6 +116,44 @@ public class RentReturnController implements Initializable {
 		this.stage = stage;
 	}
 
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		rentOperationBtn.disableProperty().bind(customerIdField.textProperty().isEmpty());
+		rentOperationBtn.disableProperty().bind(rentableIdField.textProperty().isEmpty());
+
+		returnOperationBtn.disableProperty().bind(customerIdField.textProperty().isEmpty());
+		returnOperationBtn.disableProperty().bind(rentableIdField.textProperty().isEmpty());
+
+		deleteOperationBtn.disableProperty().bind(operationsTable.getSelectionModel().selectedItemProperty().isNull());
+		operationsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		// Bind the disable property of the button
+		deleteOperationBtn.disableProperty()
+				.bind(Bindings.isEmpty(operationsTable.getSelectionModel().getSelectedItems()));
+
+		customers = InfoSys.customers;
+		rentables = InfoSys.rentables;
+		operations = InfoSys.operations;
+		customersObservableList = FXCollections.observableArrayList(customers);
+		rentablesObservableList = FXCollections.observableArrayList(rentables);
+		operationsObservableList = FXCollections.observableArrayList(operations);
+		
+		imageView.setPreserveRatio(true);
+		imageView.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				openImageInNewWindow(imageView);
+			}
+		});
+
+		try {
+			setColCustomersTable();
+			setColRentablesTable();
+			setColOperationsTable();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void setColCustomersTable() throws IOException {
 		// first we fill the table with objects in the intilization phase
 		// then we read the values
@@ -307,6 +347,100 @@ public class RentReturnController implements Initializable {
 		customersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	}
 
+	private void setColOperationsTable() {
+
+		// bind instance variables/properties to columns
+		operationIDCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
+				String.valueOf(cell.getValue().getOperationSnapshot().getOperationId())));
+		operationCustomerTypeCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
+				cell.getValue().getOperationSnapshot().getCustomer().getClass().getSimpleName()));
+		operationCustomerNameCol.setCellValueFactory(
+				cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getOperationSnapshot().getCustomer().getName()));
+		operationCustomerIdCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
+				String.valueOf(cell.getValue().getOperationSnapshot().getCustomer().getId())));
+		operationRentableTypeCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
+				cell.getValue().getOperationSnapshot().getRentable().getClass().getSimpleName()));
+		operationRentableIdCol.setCellValueFactory(
+				cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getOperationSnapshot().getRentable().getNumber()));
+		operationTypeCol.setCellValueFactory(
+				cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getOperationSnapshot().getOperationType()));
+		operationDateCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
+				String.valueOf(cell.getValue().getOperationSnapshot().getOperationDate())));
+		operationAmountCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+		// setup values first
+		noOfOperations.setText(String.valueOf(operationsObservableList.size()));
+		noOfCars.setText(String.valueOf(rentablesObservableList.stream().filter(Car.class::isInstance).count()));
+		noOfProperties
+				.setText(String.valueOf(rentablesObservableList.stream().filter(RealEstate.class::isInstance).count()));
+		noOfCitizens
+				.setText(String.valueOf(customersObservableList.stream().filter(Citizen.class::isInstance).count()));
+		noOfResidents
+				.setText(String.valueOf(customersObservableList.stream().filter(Resident.class::isInstance).count()));
+		noOfCompanies
+				.setText(String.valueOf(customersObservableList.stream().filter(Company.class::isInstance).count()));
+
+		// then watch for changes
+		operationsObservableList.addListener((Observable observable) -> {
+			noOfOperations.setText(String.valueOf(operationsObservableList.stream().count()));
+		});
+		rentablesObservableList.addListener((Observable observable) -> {
+			noOfCars.setText(String.valueOf(rentablesObservableList.stream().filter(Car.class::isInstance).count()));
+		});
+		rentablesObservableList.addListener((Observable observable) -> {
+			noOfProperties.setText(
+					String.valueOf(rentablesObservableList.stream().filter(RealEstate.class::isInstance).count()));
+		});
+		customersObservableList.addListener((Observable observable) -> {
+			noOfCitizens.setText(
+					String.valueOf(customersObservableList.stream().filter(Citizen.class::isInstance).count()));
+		});
+		customersObservableList.addListener((Observable observable) -> {
+			noOfCompanies.setText(
+					String.valueOf(customersObservableList.stream().filter(Company.class::isInstance).count()));
+		});
+		customersObservableList.addListener((Observable observable) -> {
+			noOfResidents.setText(
+					String.valueOf(customersObservableList.stream().filter(Resident.class::isInstance).count()));
+		});
+		
+		ObservableList<String> list = FXCollections.observableArrayList();
+		list.addAll(/*"Ongoing Operations",*/ "ID", "Price");
+		operationsFilterComboBox.setItems(list);
+		operationsFilterComboBox.setValue("ID");
+		operationsFilteredData=new FilteredList<>(operationsObservableList, p -> true);
+		
+		// 6. Add a listener to the text property of the search field
+		operationsSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+			operationsFilteredData.setPredicate(operation -> {
+				// If filter text is empty, display all persons.
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				// Compare person's details with filter text.
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (operationsFilterComboBox.getValue().equals("ID"))
+					if (String.valueOf(operation.getOperationSnapshot().getOperationId()).contains(lowerCaseFilter))
+						return true; // Filter matches id.
+
+				if (operationsFilterComboBox.getValue().equals("Price"))
+					if (String.valueOf(operation.getOperationSnapshot().getPrice()).toLowerCase().contains(lowerCaseFilter))
+						return true; // Filter matches name.
+				
+//				if (operationsFilterComboBox.getValue().equals("Ongoing Operations"))
+//					if (String.valueOf(operation.getOperationSnapshot().getOperationId()).contains(lowerCaseFilter))
+//						return true; // Filter matches id.
+				
+				return false; // Does not match.
+			});
+		});
+		
+		operationsTable.setItems(operationsFilteredData);
+		operationsTable.setEditable(true);
+		operationsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	}
+
 	private void setColRentablesTable() throws IOException {
 
 		rentableTypeCol.setCellValueFactory(e -> {
@@ -415,7 +549,7 @@ public class RentReturnController implements Initializable {
 				if (rentablesFilterComboBox.getValue().equals("Price"))
 					if (String.valueOf(rentable.getMonthlyPrice(rentable)).contains(lowerCaseFilter))
 						return true;
-				
+
 				if (rentable instanceof Car car) {
 					// Compare car details with filter text.
 					if (rentablesFilterComboBox.getValue().equals("Plate No"))
@@ -424,7 +558,7 @@ public class RentReturnController implements Initializable {
 					if (rentablesFilterComboBox.getValue().equals("Brand"))
 						if (car.getBrand().contains(lowerCaseFilter))
 							return true;
-					
+
 				} else if (rentable instanceof RealEstate realestate) {
 					// compare realEstate details
 					if (rentablesFilterComboBox.getValue().equals("RealEstate Type"))
@@ -494,100 +628,6 @@ public class RentReturnController implements Initializable {
 		}
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
-		imageView.setPreserveRatio(true);
-		imageView.setOnMouseClicked(event -> {
-			if (event.getClickCount() == 2) {
-				openImageInNewWindow(imageView);
-			}
-		});
-
-		rentOperationBtn.disableProperty().bind(customerIdField.textProperty().isEmpty());
-		rentOperationBtn.disableProperty().bind(rentableIdField.textProperty().isEmpty());
-
-		returnOperationBtn.disableProperty().bind(customerIdField.textProperty().isEmpty());
-		returnOperationBtn.disableProperty().bind(rentableIdField.textProperty().isEmpty());
-
-		deleteOperationBtn.disableProperty().bind(operationsTable.getSelectionModel().selectedItemProperty().isNull());
-		operationsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		// Bind the disable property of the button
-		deleteOperationBtn.disableProperty()
-				.bind(Bindings.isEmpty(operationsTable.getSelectionModel().getSelectedItems()));
-
-		customers = InfoSys.customers;
-		rentables = InfoSys.rentables;
-		operations = InfoSys.operations;
-		customersObservableList = FXCollections.observableArrayList(customers);
-		rentablesObservableList = FXCollections.observableArrayList(rentables);
-		operationsObservableList = FXCollections.observableArrayList(operations);
-
-		// bind instance variables/properties to columns
-		operationCustomerTypeCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
-				cell.getValue().getOperationSnapshot().getCustomer().getClass().getSimpleName()));
-		operationCustomerNameCol.setCellValueFactory(
-				cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getOperationSnapshot().getCustomer().getName()));
-		operationCustomerIdCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
-				String.valueOf(cell.getValue().getOperationSnapshot().getCustomer().getId())));
-		operationRentableTypeCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
-				cell.getValue().getOperationSnapshot().getRentable().getClass().getSimpleName()));
-		operationRentableIdCol.setCellValueFactory(
-				cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getOperationSnapshot().getRentable().getNumber()));
-		operationTypeCol.setCellValueFactory(
-				cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getOperationSnapshot().getOperationType()));
-		operationDateCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(
-				String.valueOf(cell.getValue().getOperationSnapshot().getOperationDate())));
-		operationAmountCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-		try {
-			setColCustomersTable();
-			setColRentablesTable();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// setup values first
-		noOfOperations.setText(String.valueOf(operationsObservableList.size()));
-		noOfCars.setText(String.valueOf(rentablesObservableList.stream().filter(Car.class::isInstance).count()));
-		noOfProperties
-				.setText(String.valueOf(rentablesObservableList.stream().filter(RealEstate.class::isInstance).count()));
-		noOfCitizens
-				.setText(String.valueOf(customersObservableList.stream().filter(Citizen.class::isInstance).count()));
-		noOfResidents
-				.setText(String.valueOf(customersObservableList.stream().filter(Resident.class::isInstance).count()));
-		noOfCompanies
-				.setText(String.valueOf(customersObservableList.stream().filter(Company.class::isInstance).count()));
-
-		// then watch for changes
-		operationsObservableList.addListener((Observable observable) -> {
-			noOfOperations.setText(String.valueOf(operationsObservableList.stream().count()));
-		});
-		rentablesObservableList.addListener((Observable observable) -> {
-			noOfCars.setText(String.valueOf(rentablesObservableList.stream().filter(Car.class::isInstance).count()));
-		});
-		rentablesObservableList.addListener((Observable observable) -> {
-			noOfProperties.setText(
-					String.valueOf(rentablesObservableList.stream().filter(RealEstate.class::isInstance).count()));
-		});
-		customersObservableList.addListener((Observable observable) -> {
-			noOfCitizens.setText(
-					String.valueOf(customersObservableList.stream().filter(Citizen.class::isInstance).count()));
-		});
-		customersObservableList.addListener((Observable observable) -> {
-			noOfCompanies.setText(
-					String.valueOf(customersObservableList.stream().filter(Company.class::isInstance).count()));
-		});
-		customersObservableList.addListener((Observable observable) -> {
-			noOfResidents.setText(
-					String.valueOf(customersObservableList.stream().filter(Resident.class::isInstance).count()));
-		});
-
-		// column resize policy to get ride of extra space
-		operationsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		operationsTable.setItems(operationsObservableList);
-	}
-
 	// helper method to load new stage
 	private FXMLLoader master(String str) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(str));
@@ -639,8 +679,6 @@ public class RentReturnController implements Initializable {
 
 	@FXML
 	void onReturnOperation(ActionEvent event) throws CancelException {
-		System.out.println("\n*************************");
-		System.out.println("return operation");
 
 		if (!customerIdField.getText().equals("") && !rentableIdField.getText().equals("")) {
 			int customerId = Integer.parseInt(customerIdField.getText());
@@ -648,7 +686,7 @@ public class RentReturnController implements Initializable {
 			// get operaions id
 			// list only current operations
 			Operation operation = InfoSys.returnOperation(customerId, rentableId);
-			if (operation!=null) {
+			if (operation != null) {
 				operationsObservableList.add(InfoSys.searchOperationById(operation.getId() * -1));
 			}
 
@@ -671,9 +709,10 @@ public class RentReturnController implements Initializable {
 			int customerId = removedOperation.getCustomer().getId();
 			operationsTable.getSelectionModel().selectLast();
 			if (row == operationsTable.getSelectionModel().getSelectedIndex()) {// operation at the end
-				if(InfoSys.deleteObject(removedOperation)) {
-				operationsObservableList.remove(removedOperation);
-				operationsTable.getSelectionModel().clearSelection();}
+				if (InfoSys.deleteObject(removedOperation)) {
+					operationsObservableList.remove(removedOperation);
+					operationsTable.getSelectionModel().clearSelection();
+				}
 			} else {
 				showAlertError(
 						"if you want to update an operation double click on the cell other wise you can't delete an old operation");
@@ -684,5 +723,3 @@ public class RentReturnController implements Initializable {
 		rentablesTable.refresh();
 	}
 }
-
-

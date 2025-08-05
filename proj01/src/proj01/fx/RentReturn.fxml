@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="621.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj01.controllers.RentReturnController">
+<BorderPane prefHeight="621.0" prefWidth="1322.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj01.controllers.RentReturnController">
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true">
          <content>
@@ -72,14 +72,15 @@
                               </HBox>
                               <TableView fx:id="operationsTable" minWidth="1050.0" VBox.vgrow="ALWAYS">
                                  <columns>
-                                    <TableColumn fx:id="operationAmountCol" prefWidth="121.6000320315361" text="operation amount $" />
-                                    <TableColumn fx:id="operationCustomerTypeCol" prefWidth="100.79999542236328" text="customer type" />
-                                    <TableColumn fx:id="operationCustomerNameCol" prefWidth="92.80000305175781" text="name" />
-                                    <TableColumn fx:id="operationCustomerIdCol" prefWidth="88.79998779296875" text="id" />
-                                    <TableColumn fx:id="operationRentableTypeCol" prefWidth="88.79998779296875" text="rentable type" />
-                                    <TableColumn fx:id="operationRentableIdCol" minWidth="0.0" prefWidth="92.80001831054688" text="id" />
-                                    <TableColumn fx:id="operationTypeCol" prefWidth="110.4000244140625" text="operation type" />
-                                    <TableColumn fx:id="operationDateCol" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="operation Date" />
+                                    <TableColumn fx:id="operationAmountCol" prefWidth="121.6000320315361" text="Operation Amount $" />
+                                    <TableColumn fx:id="operationIDCol" prefWidth="100.79999542236328" text="Operation ID" />
+                                    <TableColumn fx:id="operationCustomerTypeCol" prefWidth="100.79999542236328" text="Customer Type" />
+                                    <TableColumn fx:id="operationCustomerNameCol" prefWidth="92.80000305175781" text="Customer Name" />
+                                    <TableColumn fx:id="operationCustomerIdCol" prefWidth="88.79998779296875" text="Customer ID" />
+                                    <TableColumn fx:id="operationRentableTypeCol" prefWidth="88.79998779296875" text="Rentable Type" />
+                                    <TableColumn fx:id="operationRentableIdCol" minWidth="0.0" prefWidth="92.80001831054688" text="Rentable  ID" />
+                                    <TableColumn fx:id="operationTypeCol" prefWidth="110.4000244140625" text="Operation Type" />
+                                    <TableColumn fx:id="operationDateCol" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Operation Date" />
                                  </columns>
                               </TableView>
                            </children>
@@ -130,15 +131,15 @@
                               </HBox>
                               <TableView fx:id="rentablesTable" minWidth="1050.0" VBox.vgrow="ALWAYS">
                                  <columns>
-                                    <TableColumn fx:id="rentableTypeCol" prefWidth="75.0" text="type" />
-                                    <TableColumn fx:id="rentableIdCol" prefWidth="75.0" text="ID" />
-                                    <TableColumn fx:id="rentableStatusCol" prefWidth="75.0" text="status" />
-                                    <TableColumn fx:id="carPlateNoCol" prefWidth="75.0" text="PlateNo" />
-                                    <TableColumn fx:id="carBrandCol" prefWidth="75.0" text="brand" />
-                                    <TableColumn fx:id="carModelCol" prefWidth="75.0" text="model" />
-                                    <TableColumn fx:id="rentableMonthlyPriceCol" prefWidth="92.0" text="monthlyPrice" />
-                                    <TableColumn fx:id="realEstateTypeCol" prefWidth="75.0" text="type" />
-                                    <TableColumn fx:id="realEstateLocationCol" prefWidth="75.0" text="location" />
+                                    <TableColumn fx:id="rentableTypeCol" prefWidth="119.99999243021011" text="Rentable Type" />
+                                    <TableColumn fx:id="rentableIdCol" prefWidth="55.20001983642578" text="ID" />
+                                    <TableColumn fx:id="rentableStatusCol" prefWidth="86.40005493164062" text="Status" />
+                                    <TableColumn fx:id="carPlateNoCol" prefWidth="74.4000244140625" text="PlateNo" />
+                                    <TableColumn fx:id="carBrandCol" prefWidth="83.199951171875" text="Car Brand" />
+                                    <TableColumn fx:id="carModelCol" prefWidth="81.5999755859375" text="Car Model" />
+                                    <TableColumn fx:id="rentableMonthlyPriceCol" prefWidth="91.19998168945312" text="Monthly Price" />
+                                    <TableColumn fx:id="realEstateTypeCol" prefWidth="120.79998779296875" text="Realestate Type" />
+                                    <TableColumn fx:id="realEstateLocationCol" prefWidth="142.4000244140625" text="Realestate Location" />
                                  </columns>
                               </TableView>
                            </children>
@@ -191,20 +192,19 @@
                               </HBox>
                               <TableView fx:id="customersTable" maxWidth="1.7976931348623157E308" minWidth="1050.0">
                                  <columns>
-                                    <TableColumn fx:id="customerTypeCol" prefWidth="75.0" text="type" />
-                                    <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="ID" />
-                                    <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="name" />
+                                    <TableColumn fx:id="customerTypeCol" prefWidth="101.59999853372574" text="Customer Type" />
+                                    <TableColumn fx:id="customerIdCol" prefWidth="48.79999542236328" text="ID" />
+                                    <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Name" />
                                     <TableColumn fx:id="NoOfCarsCol" prefWidth="75.0" text="No of Cars" />
                                     <TableColumn fx:id="NoOfUnitsCol" prefWidth="75.0" text="No of Units" />
-                                    <TableColumn fx:id="citizenNationalNoCol" prefWidth="75.0" text="national No" />
-                                    <TableColumn fx:id="residentResidenceNoCol" prefWidth="75.0" text="Residince no" />
-                                    <TableColumn fx:id="residentPassportNoCol" prefWidth="75.0" text="passport No" />
-                                    <TableColumn fx:id="residentNationalityCol" prefWidth="75.0" text="nationality" />
-                                    <TableColumn fx:id="customerBirthDateCol" prefWidth="75.0" text="birthdate" />
-                                    <TableColumn fx:id="citizenAgeCol" prefWidth="75.0" text="age" />
-                                    <TableColumn fx:id="companyLicenceNoCol" prefWidth="75.0" text="licence No" />
-                                    <TableColumn fx:id="companyLocationCol" prefWidth="75.0" text="location" />
-                                    <TableColumn fx:id="companyExpiryDateCol" prefWidth="75.0" text="expirydate" />
+                                    <TableColumn fx:id="citizenNationalNoCol" prefWidth="75.0" text="National No" />
+                                    <TableColumn fx:id="residentResidenceNoCol" prefWidth="109.59994506835938" text="Residince no" />
+                                    <TableColumn fx:id="residentPassportNoCol" prefWidth="93.60003662109375" text="Passport No" />
+                                    <TableColumn fx:id="residentNationalityCol" prefWidth="84.7999267578125" text="Nationality" />
+                                    <TableColumn fx:id="customerBirthDateCol" prefWidth="66.39996337890625" text="Birthdate" />
+                                    <TableColumn fx:id="companyLicenceNoCol" prefWidth="81.60009765625" text="Licence No" />
+                                    <TableColumn fx:id="companyLocationCol" prefWidth="71.2000732421875" text="Company Location" />
+                                    <TableColumn fx:id="companyExpiryDateCol" prefWidth="104.7999267578125" text="Expirydate" />
                                  </columns>
                               </TableView>
                            </children>

@@ -6,7 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import proj01.InfoSys;
@@ -14,7 +17,7 @@ import proj01.InfoSys;
 public class MainController {
 
 	@FXML
-	private Button homeBtn, addCustomer, addRentableBtn, exitBtn, rentBtn, saveBtn, loggerBtn;
+	private Button homeBtn, addCustomer, addRentableBtn, exitBtn, rentBtn, saveBtn, consoleBtn;
 
 //	@FXML
 //	private AnchorPane contentAnchorPane;
@@ -31,7 +34,7 @@ public class MainController {
 	public void initialize() {
 		try {
 			HomeController controller = master("/proj01/fx/Home.fxml").getController();
-			controller.setStage(stage);
+//			controller.setStage(stage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -43,6 +46,24 @@ public class MainController {
 		Parent root = loader.load();
 		contentStackPane.getChildren().add(root);
 		return loader;
+	}
+
+	@FXML
+	private TextField textField;
+	@FXML
+	private TextArea textArea;
+	@FXML
+	void onConsole() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/proj01/fx/console.fxml"));
+			Parent parent=	loader.load();
+			Scene newScene = new Scene(parent);
+			Stage consoleWindow = new Stage();
+			consoleWindow.setScene(newScene);
+			consoleWindow.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

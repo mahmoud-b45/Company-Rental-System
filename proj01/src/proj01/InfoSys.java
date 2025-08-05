@@ -628,16 +628,16 @@ public class InfoSys extends Application {
 	 * @return operation that you can use to create return operation
 	 */
 	public static Operation searchRentOperationAtEndByCustomerAndRentable(Customer customer, Rentable rentable) {
-		for (Operation op : operations.reversed()) {// 1 search for operation
+		for (Operation op : ongoingOperations.reversed()) {// 1 search for operation
 			if (op.getCustomer().getId() == customer.getId()
 					&& op.getRentable().getNumber().equals(rentable.getNumber())) {
 				// 2 that has the same customer and rentable
-				if (op.getOperationType().equals("rent")) {// 3 and type rent
-					if (searchOperationById(op.getId() * -1) == null) {
+//				if (op.getOperationType().equals("rent")) {// 3 and type rent
+//					if (searchOperationById(op.getId() * -1) == null) {
 						// 4 and doesn't have return operation
 						return op;
-					}
-				} // 3
+//					}
+//				} // 3
 			} // 2
 		} // 1
 		return null;
@@ -820,6 +820,7 @@ public class InfoSys extends Application {
 			if (customer.returnRentable(rentable)) {// 2 then return rentable and create return operation
 				int operationId = returnOp.getId();
 				rentable.setStatus(true);
+				ongoingOperations.remove(returnOp);
 				returnOp = new Operation(operationId, customer, rentable, new Date(false), "return");
 				return returnOp;
 			} // 2
@@ -849,41 +850,41 @@ public class InfoSys extends Application {
 
 		boolean policyResult = false;
 
-		if (customer instanceof Citizen citizen) {
+		if (customer instanceof Citizen citizen) {// 1
 
 			minAge = citizen.getAgeInYears() > minAgeCitizen;
 			policyResult = minAge;
-			if (!policyResult) {
+			if (!policyResult) {// 1.1
 				alertWindow("Citizen age: " + citizen.getAgeInYears() + "\nMinmum age: " + minAgeCitizen
 						+ "\nPolicy result: " + policyResult);
 				System.out.println("Citizen age: " + citizen.getAgeInYears() + "\nMinmum age: " + minAgeCitizen
 						+ "\nPolicy result: " + policyResult);
-			}
+			}// 1.1 END
 			return policyResult;
 
-		} else if (customer instanceof Resident resident) {
+		} else if (customer instanceof Resident resident) {// 2
 
-			if (rentable instanceof Car car) {
+			if (rentable instanceof Car car) {// 2.1
 
 				minAge = resident.getAgeInYears() > minAgeResidentCar;
 				noCars = resident.getNoOfCars() < noCarsResident;
 				policyResult = minAge && noCars;
-				if (!policyResult) {
+				if (!policyResult) {// 2.1.1
 					alertWindow("Resident age: " + resident.getAgeInYears() + "\nMinmum age: " + minAgeResidentCar
 							+ "\nNo. of cars owned: " + resident.getNoOfCars() + "\nNo. of cars allowed: "
 							+ noCarsResident + "\nPolicy result: " + policyResult);
 					System.out.println("Resident age: " + resident.getAgeInYears() + "\nMinmum age: "
 							+ minAgeResidentCar + "\nNo. of cars owned: " + resident.getNoOfCars()
 							+ "\nNo. of cars allowed: " + noCarsResident + "\nPolicy result: " + policyResult);
-				}
+				}//2.1.1
 				return policyResult;
 
-			} else if (rentable instanceof RealEstate realEstate) {
+			} else if (rentable instanceof RealEstate realEstate) {// 2.2
 
 				minAge = resident.getAgeInYears() > minAgeResidentRealEstate;
 				noRealEstates = resident.getNoOfUnits() < noRealEstatesResident;
 				policyResult = minAge && noRealEstates;
-				if (!policyResult) {
+				if (!policyResult) {// 2.2.1
 					alertWindow("Resident age: " + resident.getAgeInYears() + "\nMinmum age: "
 							+ minAgeResidentRealEstate + "\nNo. of realEstates owned: " + resident.getNoOfUnits()
 							+ "\nNo. of realEstates allowed: " + noRealEstatesResident + "\nPolicy result: "
@@ -892,39 +893,39 @@ public class InfoSys extends Application {
 							+ minAgeResidentRealEstate + "\nNo. of realEstates owned: " + resident.getNoOfUnits()
 							+ "\nNo. of realEstates allowed: " + noRealEstatesResident + "\nPolicy result: "
 							+ policyResult);
-				}
+				}//2.2.1 
 				return policyResult;
-			}
+			}// 2.2
 
-		} else if (customer instanceof Company company) {
+		} else if (customer instanceof Company company) {// 3
 
 			expiry = company.isExpired();
-			if (rentable instanceof Car car) {
+			if (rentable instanceof Car car) {// 3.1
 				noCars = company.getNoOfCars() < noCarsCompany;
-				policyResult = expiry && noCars;
-				if (!policyResult) {
+				policyResult = !expiry && noCars;
+				if (!policyResult) {// 3.1.1
 					alertWindow("Company expiry date: " + company.getExpiryDate() + "\nNo. of cars owned: "
 							+ company.getNoOfUnits() + "\nNo. of cars allowed: " + noRealEstatesCompany
 							+ "\nPolicy result: " + policyResult);
 					System.out.println("Company expiry date: " + company.getExpiryDate() + "\nNo. of cars owned: "
 							+ company.getNoOfUnits() + "\nNo. of cars allowed: " + noRealEstatesCompany
 							+ "\nPolicy result: " + policyResult);
-				}
+				}//3.1.1
 				return policyResult;
-			} else if (rentable instanceof RealEstate realEstate) {
+			} else if (rentable instanceof RealEstate realEstate) {// 3.2
 				noRealEstates = company.getNoOfUnits() < noRealEstatesCompany;
-				policyResult = expiry && noRealEstates;
-				if (!policyResult) {
+				policyResult = !expiry && noRealEstates;
+				if (!policyResult) {// 3.2.1
 					alertWindow("Company expiry date: " + company.getExpiryDate() + "\nNo. of realEstates owned: "
 							+ company.getNoOfUnits() + "\nNo. of realEstates allowed: " + noRealEstatesCompany
 							+ "\nPolicy result: " + policyResult);
 					System.out.println("Company expiry date: " + company.getExpiryDate()
 							+ "\nNo. of realEstates owned: " + company.getNoOfUnits() + "\nNo. of realEstates allowed: "
 							+ noRealEstatesCompany + "\nPolicy result: " + policyResult);
-				}
+				}// 3.2.1
 				return policyResult;
-			}
-		}
+			}// 3.2
+		}// 3
 		return false;
 	}
 

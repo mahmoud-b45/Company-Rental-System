@@ -131,7 +131,10 @@ public class Company extends Customer implements Serializable {
 	public void setExpiryDate() throws CancelException {
 		this.expiryDate = new Date(true);
 	}
-
+/**
+ * 
+ * @return True=expired, False=not expired.
+ */
 	public boolean isExpired() {
 		if (expiryDate.getYear() < LocalDate.now().getYear()) {
 			return true;// expired
