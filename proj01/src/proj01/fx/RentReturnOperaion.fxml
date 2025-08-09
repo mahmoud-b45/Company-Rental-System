@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="621.0" prefWidth="1322.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj01.controllers.RentReturnController">
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true">
+         <content>
+            <SplitPane dividerPositions="0.4343152866242038" orientation="VERTICAL" prefHeight="504.0" prefWidth="714.0">
+               <items>
+                  <SplitPane orientation="VERTICAL" prefHeight="248.0" prefWidth="712.8">
+                     <items>
+                        <VBox>
+                           <children>
+                              <HBox style="-fx-background-color: FFEE88;">
+                                 <children>
+                                    <Label text="Operations Table">
+                                       <font>
+                                          <Font name="Montserrat ExtraBold Italic" size="24.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search : ">
+                                             <font>
+                                                <Font name="Roboto Black" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <TextField fx:id="operationsSearchField" alignment="CENTER" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter : ">
+                                             <font>
+                                                <Font name="Roboto Black" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="25.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <ComboBox fx:id="operationsFilterComboBox" prefWidth="150.0" promptText="Select a Filter">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ComboBox>
+                                       </children>
+                                       <padding>
+                                          <Insets left="25.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="operationsTable" minWidth="1050.0" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="operationAmountCol" prefWidth="121.6000320315361" text="Operation Amount $" />
+                                    <TableColumn fx:id="operationIDCol" prefWidth="100.79999542236328" text="Operation ID" />
+                                    <TableColumn fx:id="operationCustomerTypeCol" prefWidth="100.79999542236328" text="Customer Type" />
+                                    <TableColumn fx:id="operationCustomerNameCol" prefWidth="92.80000305175781" text="Customer Name" />
+                                    <TableColumn fx:id="operationCustomerIdCol" prefWidth="88.79998779296875" text="Customer ID" />
+                                    <TableColumn fx:id="operationRentableTypeCol" prefWidth="88.79998779296875" text="Rentable Type" />
+                                    <TableColumn fx:id="operationRentableIdCol" minWidth="0.0" prefWidth="92.80001831054688" text="Rentable  ID" />
+                                    <TableColumn fx:id="operationTypeCol" prefWidth="110.4000244140625" text="Operation Type" />
+                                    <TableColumn fx:id="operationDateCol" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Operation Date" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                     <items>
+                        <VBox>
+                           <children>
+                              <HBox style="-fx-background-color: FFEE88;">
+                                 <children>
+                                    <Label text="Rentables Table">
+                                       <font>
+                                          <Font name="Montserrat ExtraBold Italic" size="24.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search : ">
+                                             <font>
+                                                <Font name="Roboto Black" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <TextField fx:id="rentablesSearchField" alignment="CENTER" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter : ">
+                                             <font>
+                                                <Font name="Roboto Black" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="25.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <ComboBox fx:id="rentablesFilterComboBox" prefWidth="150.0" promptText="Select a Filter">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ComboBox>
+                                       </children>
+                                       <padding>
+                                          <Insets left="25.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="rentablesTable" minWidth="1050.0" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="rentableTypeCol" prefWidth="119.99999243021011" text="Rentable Type" />
+                                    <TableColumn fx:id="rentableIdCol" prefWidth="55.20001983642578" text="ID" />
+                                    <TableColumn fx:id="rentableStatusCol" prefWidth="86.40005493164062" text="Status" />
+                                    <TableColumn fx:id="carPlateNoCol" prefWidth="74.4000244140625" text="PlateNo" />
+                                    <TableColumn fx:id="carBrandCol" prefWidth="83.199951171875" text="Car Brand" />
+                                    <TableColumn fx:id="carModelCol" prefWidth="81.5999755859375" text="Car Model" />
+                                    <TableColumn fx:id="rentableMonthlyPriceCol" prefWidth="91.19998168945312" text="Monthly Price" />
+                                    <TableColumn fx:id="realEstateTypeCol" prefWidth="120.79998779296875" text="Realestate Type" />
+                                    <TableColumn fx:id="realEstateLocationCol" prefWidth="142.4000244140625" text="Realestate Location" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <HBox alignment="CENTER_LEFT" style="-fx-background-color: FFEE88;">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <children>
+                                    <Label text="Customers Table">
+                                       <font>
+                                          <Font name="Montserrat ExtraBold Italic" size="24.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search : ">
+                                             <font>
+                                                <Font name="Roboto Black" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <TextField fx:id="customersSearchField" alignment="CENTER" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter : ">
+                                             <font>
+                                                <Font name="Roboto Black" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="25.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <ComboBox fx:id="customersFilterComboBox" prefWidth="150.0" promptText="Select a Filter">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ComboBox>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="25.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="customersTable" maxWidth="1.7976931348623157E308" minWidth="1050.0">
+                                 <columns>
+                                    <TableColumn fx:id="customerTypeCol" prefWidth="101.59999853372574" text="Customer Type" />
+                                    <TableColumn fx:id="customerIdCol" prefWidth="48.79999542236328" text="ID" />
+                                    <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Name" />
+                                    <TableColumn fx:id="NoOfCarsCol" prefWidth="75.0" text="No of Cars" />
+                                    <TableColumn fx:id="NoOfUnitsCol" prefWidth="75.0" text="No of Units" />
+                                    <TableColumn fx:id="citizenNationalNoCol" prefWidth="75.0" text="National No" />
+                                    <TableColumn fx:id="residentResidenceNoCol" prefWidth="109.59994506835938" text="Residince no" />
+                                    <TableColumn fx:id="residentPassportNoCol" prefWidth="93.60003662109375" text="Passport No" />
+                                    <TableColumn fx:id="residentNationalityCol" prefWidth="84.7999267578125" text="Nationality" />
+                                    <TableColumn fx:id="customerBirthDateCol" prefWidth="66.39996337890625" text="Birthdate" />
+                                    <TableColumn fx:id="companyLicenceNoCol" prefWidth="81.60009765625" text="Licence No" />
+                                    <TableColumn fx:id="companyLocationCol" prefWidth="71.2000732421875" text="Company Location" />
+                                    <TableColumn fx:id="companyExpiryDateCol" prefWidth="104.7999267578125" text="Expirydate" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+               </items>
+            </SplitPane>
+         </content>
+      </ScrollPane>
+   </center>
+   <left>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="538.0" prefWidth="266.0" BorderPane.alignment="CENTER">
+         <content>
+            <AnchorPane prefWidth="251.0">
+               <children>
+                  <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="699.2" prefWidth="251.2" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <GridPane alignment="CENTER" vgap="1.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="250.0" prefHeight="250.0" vgrow="ALWAYS" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Rentable ID: " GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="rentableIdField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Customer ID: ">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="customerIdField" GridPane.columnIndex="1" />
+                              <Button fx:id="clearBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefWidth="75.0" text="Clear" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Button fx:id="returnOperationBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onReturnOperation" prefWidth="75.0" text="Return" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Button fx:id="rentOperationBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onRentOperation" prefWidth="75.0" text="Rent" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Button fx:id="deleteOperationBtn" mnemonicParsing="false" onAction="#onDeleteOperation" prefWidth="75.0" text="Delete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="No. of Operations: " GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="No. of Properties: " GridPane.rowIndex="6">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="No. of Cars: " GridPane.rowIndex="7">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="No. of Citizens: " GridPane.rowIndex="8">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" left="15.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="No. of Residents: " GridPane.rowIndex="9">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="No. of Companies: " GridPane.rowIndex="10">
+                                 <font>
+                                    <Font name="Roboto" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="noOfOperations" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Roboto Condensed" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="noOfProperties" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font name="Roboto Condensed" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="noOfCars" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                 <font>
+                                    <Font name="Roboto Condensed" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="noOfCitizens" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font name="Roboto Condensed" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="noOfCompanies" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                 <font>
+                                    <Font name="Roboto Condensed" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="noOfResidents" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                 <font>
+                                    <Font name="Roboto Condensed" size="14.0" />
+                                 </font>
+                              </Label>
+                              <StackPane fx:id="imageStackPane" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER">
+                                 <children>
+                                    <ImageView fx:id="imageView" fitHeight="181.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </GridPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </left>
+</BorderPane>
