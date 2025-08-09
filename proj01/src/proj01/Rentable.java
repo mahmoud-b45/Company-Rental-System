@@ -156,7 +156,10 @@ public class Rentable implements Serializable {
 //	public abstract int getMonthlyPrice();
 	// In Rentable.java
 //	public abstract Rentable copy();
-
+/**
+ * 
+ * @return true=available, false=not available.
+ */
 	public boolean isStatus() {
 		return status;
 	}

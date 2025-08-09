@@ -19,10 +19,8 @@ public class MainController {
 	@FXML
 	private Button homeBtn, addCustomer, addRentableBtn, exitBtn, rentBtn, saveBtn, consoleBtn;
 
-//	@FXML
-//	private AnchorPane contentAnchorPane;
 	@FXML
-	private StackPane contentStackPane;
+	private StackPane contentStackPane=new StackPane();
 
 	private Stage stage;
 
@@ -34,7 +32,6 @@ public class MainController {
 	public void initialize() {
 		try {
 			HomeController controller = master("/proj01/fx/Home.fxml").getController();
-//			controller.setStage(stage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,9 +46,10 @@ public class MainController {
 	}
 
 	@FXML
-	private TextField textField;
+	private TextField consoleInputTextField;
 	@FXML
-	private TextArea textArea;
+	private TextArea consoleOutputTextArea;
+	
 	@FXML
 	void onConsole() {
 		try {
@@ -97,9 +95,9 @@ public class MainController {
 	}
 
 	@FXML
-	void rentReturn(ActionEvent event) {
+	void rentReturnOperation(ActionEvent event) {
 		try {
-			RentReturnController controller = master("/proj01/fx/RentReturn.fxml").getController();
+			RentReturnController controller = master("/proj01/fx/RentReturnOperation.fxml").getController();
 			controller.setStage(stage);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,7 +112,6 @@ public class MainController {
 	@FXML
 	void exit(ActionEvent event) {
 		stage.close();
-		InfoSys.mainSelection = 0;
 		System.exit(0);
 	}
 

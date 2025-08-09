@@ -78,7 +78,7 @@ public class InfoSys extends Application {
 	public static Set<Customer> customersSet;
 	public static Set<Rentable> rentablesSet;
 
-	public static int mainSelection = 99;
+	public static int mainSelection = -1;
 	public static String[] args2;
 
 	/**
@@ -116,17 +116,10 @@ public class InfoSys extends Application {
 	private static void mainMenu() throws CancelException {
 		try {
 			String select = "";
-			if (mainSelection != 0) {
+			if (mainSelection == -1) {
 				System.out.println("\npress any key to start: ");
 				select = in.nextLine();
 			}
-			if (select != null) {
-
-				if (mainSelection != 99) {
-					mainSelection = 0;
-				} else {
-					mainSelection = 1;
-				}
 				while (mainSelection != 0) {
 					System.out.println("select one operation: ");
 					System.out.println("1)add customer");
@@ -178,13 +171,12 @@ public class InfoSys extends Application {
 						break;
 					}
 				}
-			}
 		} catch (InputMismatchException e) {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			in.nextLine();
 			System.out.println("exiting...");
-			main(args2);
+			mainMenu();
 		}
 	}
 
@@ -241,7 +233,9 @@ public class InfoSys extends Application {
 			}
 			in.nextLine();
 			System.out.println("exiting...");
-			main(args2);
+//			main(null);
+			mainMenu();
+
 		}
 		return null;
 	}
@@ -286,7 +280,9 @@ public class InfoSys extends Application {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			System.out.println("exiting...");
-			main(null);
+//			main(null);
+			mainMenu();
+
 		}
 		return null;
 	}
@@ -335,7 +331,9 @@ public class InfoSys extends Application {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			System.out.println("exiting...");
-			main(null);
+//			main(null);
+			mainMenu();
+
 		}
 		return null;
 	}
@@ -357,7 +355,8 @@ public class InfoSys extends Application {
 				System.out.println("4 search for a Rentable...");
 				System.out.println("*************************************************");
 				System.out.println("1) enter rentable id");
-				System.out.println("2) list all available rentables");
+				System.out.println("2) list available rentables");
+				System.out.println("3) list unavailable rentables");
 				System.out.println("0) go back");
 				System.out.println("select an option: ");
 				selection = in.nextInt();
@@ -370,6 +369,9 @@ public class InfoSys extends Application {
 				case 2:
 					listAvailUnavilRentables(true);
 					break;
+				case 3:
+					listAvailUnavilRentables(false);
+					break;
 				case 0:
 					System.out.println("going back...");
 					return null;
@@ -381,7 +383,9 @@ public class InfoSys extends Application {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			System.out.println("exiting...");
-			main(null);
+//			main(null);
+			mainMenu();
+
 		}
 		return null;
 	}
@@ -426,7 +430,9 @@ public class InfoSys extends Application {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			System.out.println("exiting...");
-			main(null);
+//			main(null);
+			mainMenu();
+
 		}
 		return null;
 	}
@@ -567,19 +573,19 @@ public class InfoSys extends Application {
 					return operation;
 				}
 			}
-			if (operation.getRentable()instanceof Car car) {
+			if (operation.getRentable() instanceof Car car) {
 				sameRentable = car.equals(rentable);
-			} else if (operation.getRentable()instanceof RealEstate realEstate) {
+			} else if (operation.getRentable() instanceof RealEstate realEstate) {
 				sameRentable = realEstate.equals(rentable);
 			}
 
-			if (operation.getCustomer()instanceof Citizen citizen) {
+			if (operation.getCustomer() instanceof Citizen citizen) {
 				sameCustomer = citizen.equals(customer);
 			}
-			if (operation.getCustomer()instanceof Resident resident) {
+			if (operation.getCustomer() instanceof Resident resident) {
 				sameCustomer = resident.equals(customer);
 			}
-			if (operation.getCustomer()instanceof Company company) {
+			if (operation.getCustomer() instanceof Company company) {
 				sameCustomer = company.equals(customer);
 			}
 
@@ -634,12 +640,13 @@ public class InfoSys extends Application {
 				// 2 that has the same customer and rentable
 //				if (op.getOperationType().equals("rent")) {// 3 and type rent
 //					if (searchOperationById(op.getId() * -1) == null) {
-						// 4 and doesn't have return operation
-						return op;
+				// 4 and doesn't have return operation
+				return op;
 //					}
 //				} // 3
 			} // 2
 		} // 1
+		alertWindow("searchRentOperationAtEndByCustomerAndRentable(): null");
 		return null;
 	}
 
@@ -724,7 +731,7 @@ public class InfoSys extends Application {
 					return result;
 
 				case 4:// return
-					Operation operation = searchOperationByCustomerAndRentable(customer, rentable, null, "return");
+//					Operation operation = searchOperationByCustomerAndRentable(customer, rentable, null, "return");
 					if (returnOperation(customer, rentable) != null) {
 						result = true;
 					}
@@ -739,7 +746,9 @@ public class InfoSys extends Application {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			System.out.println("exiting...");
-			main(null);
+//			main(null);
+			mainMenu();
+
 		}
 		return false;
 	}
@@ -811,24 +820,29 @@ public class InfoSys extends Application {
 	 * @throws CancelException
 	 */
 	private static Operation returnOperation(Customer customerOut, Rentable rentableOut) throws CancelException {
-		Operation returnOp = searchRentOperationAtEndByCustomerAndRentable(customerOut, rentableOut);
-		// search for operation of type rent that has the same customer and rentable and
-		// doesn't have return operation
-		if (returnOp != null) {// 1 if found
-			Customer customer = returnOp.getCustomer();
-			Rentable rentable = returnOp.getRentable();
-			if (customer.returnRentable(rentable)) {// 2 then return rentable and create return operation
-				int operationId = returnOp.getId();
-				rentable.setStatus(true);
-				ongoingOperations.remove(returnOp);
-				returnOp = new Operation(operationId, customer, rentable, new Date(false), "return");
-				return returnOp;
+		// why not use operation id? i should add filter for rentables id and customers id and ongoing annd when selecting from table it fill the fields of customer and rentable id
+		//condition 1: if there is no return operation you can return it or if it's in the ongoing operations list = there is no return operation so you can return it
+		Operation returnOp = searchRentOperationAtEndByCustomerAndRentable(customerOut, rentableOut);// cond 1
+			// search for operation of type rent that has the same customer and rentable and
+			// doesn't have return operation
+			if (returnOp != null) {// 1 if found
+				Customer customer = returnOp.getCustomer();
+				Rentable rentable = returnOp.getRentable();
+				if (!rentable.isStatus())
+					if(customer.returnRentable(rentable)) {// 3 then return rentable and create return operation
+					int operationId = returnOp.getId();
+					rentable.setStatus(true);
+					ongoingOperations.remove(returnOp);
+					returnOp = new Operation(operationId, customer, rentable, new Date(false), "return");
+					operations.add(returnOp);
+					return returnOp;
+//				} // 3
 			} // 2
 		} // 1
+		alertWindow("operation not found\nreturnOperation(): "+returnOp);
 		return null;
 	}
 
-	
 	public static <T, E> boolean policy(T customer, E rentable) {
 		// citizen conditions
 		int minAgeCitizen = 16;
@@ -860,7 +874,7 @@ public class InfoSys extends Application {
 						+ "\nPolicy result: " + policyResult);
 				System.out.println("Citizen age: " + citizen.getAgeInYears() + "\nMinmum age: " + minAgeCitizen
 						+ "\nPolicy result: " + policyResult);
-			}// 1.1 END
+			} // 1.1 END
 			return policyResult;
 
 		} else if (customer instanceof Resident resident) {// 2
@@ -877,7 +891,7 @@ public class InfoSys extends Application {
 					System.out.println("Resident age: " + resident.getAgeInYears() + "\nMinmum age: "
 							+ minAgeResidentCar + "\nNo. of cars owned: " + resident.getNoOfCars()
 							+ "\nNo. of cars allowed: " + noCarsResident + "\nPolicy result: " + policyResult);
-				}//2.1.1
+				} // 2.1.1
 				return policyResult;
 
 			} else if (rentable instanceof RealEstate realEstate) {// 2.2
@@ -894,9 +908,9 @@ public class InfoSys extends Application {
 							+ minAgeResidentRealEstate + "\nNo. of realEstates owned: " + resident.getNoOfUnits()
 							+ "\nNo. of realEstates allowed: " + noRealEstatesResident + "\nPolicy result: "
 							+ policyResult);
-				}//2.2.1
+				} // 2.2.1
 				return policyResult;
-			}// 2.2
+			} // 2.2
 
 		} else if (customer instanceof Company company) {// 3
 
@@ -911,7 +925,7 @@ public class InfoSys extends Application {
 					System.out.println("Company expiry date: " + company.getExpiryDate() + "\nNo. of cars owned: "
 							+ company.getNoOfUnits() + "\nNo. of cars allowed: " + noRealEstatesCompany
 							+ "\nPolicy result: " + policyResult);
-				}//3.1.1
+				} // 3.1.1
 				return policyResult;
 			} else if (rentable instanceof RealEstate realEstate) {// 3.2
 				noRealEstates = company.getNoOfUnits() < noRealEstatesCompany;
@@ -923,10 +937,10 @@ public class InfoSys extends Application {
 					System.out.println("Company expiry date: " + company.getExpiryDate()
 							+ "\nNo. of realEstates owned: " + company.getNoOfUnits() + "\nNo. of realEstates allowed: "
 							+ noRealEstatesCompany + "\nPolicy result: " + policyResult);
-				}// 3.2.1
+				} // 3.2.1
 				return policyResult;
-			}// 3.2
-		}// 3
+			} // 3.2
+		} // 3
 		return false;
 	}
 
@@ -984,7 +998,9 @@ public class InfoSys extends Application {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			System.out.println("exiting...");
-			main(null);
+//			main(null);
+			mainMenu();
+
 		}
 		return false;
 	}
@@ -1532,7 +1548,9 @@ public class InfoSys extends Application {
 			System.out.println("you enterd a string in place of integers.\npress any key to go back...");
 			in.nextLine();
 			System.out.println("exiting...");
-			main(null);
+//			main(null);
+			mainMenu();
+
 		}
 	} // END report()
 

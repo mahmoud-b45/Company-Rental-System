@@ -228,7 +228,9 @@ public class RentReturnController implements Initializable {
 		});
 		residentNationalityCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		residentNationalityCol.setOnEditCommit(e -> {
-			((Resident) e.getRowValue()).setNationality(e.getNewValue());
+			if(e.getRowValue() instanceof Resident res)
+			res.setNationality(e.getNewValue());
+			else e.consume();
 		});
 
 		customerBirthDateCol.setCellValueFactory(e -> {
@@ -407,7 +409,7 @@ public class RentReturnController implements Initializable {
 		});
 
 		ObservableList<String> list = FXCollections.observableArrayList();
-		list.addAll(/*"Ongoing Operations",*/ "ID", "Price");
+		list.addAll(/*"Ongoing Operations",*/ "ID", "Price","Customer ID","Rentable ID");
 		operationsFilterComboBox.setItems(list);
 		operationsFilterComboBox.setValue("ID");
 		operationsFilteredData=new FilteredList<>(operationsObservableList, p -> true);

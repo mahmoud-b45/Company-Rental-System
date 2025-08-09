@@ -28,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import proj01.CancelException;
 import proj01.Citizen;
 import proj01.Company;
 import proj01.Customer;
@@ -378,7 +379,7 @@ public class AddCustomerController implements Initializable {
 	}
 
 	@FXML
-	void onDelete(ActionEvent event) {
+	void onDelete(ActionEvent event) throws CancelException {
 		int row;
 		if (citizenTab.isSelected()) {
 			row = citizenTable.getSelectionModel().getSelectedIndex();

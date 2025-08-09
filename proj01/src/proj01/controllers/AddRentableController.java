@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import proj01.CancelException;
 import proj01.Car;
 import proj01.InfoSys;
 import proj01.RealEstate;
@@ -250,7 +251,7 @@ public class AddRentableController implements Initializable {
 	}
 
 	@FXML
-	void onDelete(ActionEvent event) {
+	void onDelete(ActionEvent event) throws CancelException {
 		int row;
 		if (carTab.isSelected()) {
 			row = carTable.getSelectionModel().getSelectedIndex();
